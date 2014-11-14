@@ -12,9 +12,6 @@ import java.util.Date;
 @Table(name = "MQ_QUIZ_CONTENT")
 public class QuizContent extends Model {
 
-    // `ANSWER_A`, `ANSWER_B`, `ANSWER_C`, `ANSWER_D`, `SOLUTION`,
-
-
     @Column(name = "ROW_ID")
     private Integer serverId;
 

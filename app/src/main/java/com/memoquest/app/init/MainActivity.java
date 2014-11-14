@@ -1,5 +1,6 @@
 package com.memoquest.app.init;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
 import android.util.Log;
@@ -7,6 +8,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 
 import com.memoquest.app.R;
+import com.memoquest.app.game.Game1Activity;
 import com.memoquest.model.GlobalQuiz;
 import com.memoquest.model.db.Quiz;
 import com.memoquest.model.db.QuizContent;
@@ -25,12 +27,29 @@ public class MainActivity extends ActionBarActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+       //   testQuizContent();
+    }
+
+    @Override
+    protected void onStart() {
+
+        Log.i("", "MainActivity.class: onStart()");
+        super.onStart();
+
+        Intent intentConnexion = new Intent(MainActivity.this, Game1Activity.class);
+        startActivity(intentConnexion);
+    }
+
+    private void testQuizContent() {
+
 
         BuisnessLayer buisnessLayer = new BuisnessLayer();
 
         QuizService quizService = new QuizService();
 
         QuizContentTest quizContentTest = new QuizContentTest();
+
+
         QuizTest quizTest = new QuizTest();
 
         Quiz quiz = quizTest.createOneQuiz(1);
