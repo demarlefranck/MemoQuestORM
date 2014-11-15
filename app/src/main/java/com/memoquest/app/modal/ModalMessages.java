@@ -12,14 +12,14 @@ import com.memoquest.app.R;
 public class ModalMessages {
 
 
-    public void showGoodAnswerMessage(Context context){
+    public void showGoodMessage(Context context, String title, String message) {
 /*
         Toast.makeText(context,
                 "Bien jouer", Toast.LENGTH_LONG).show();
   */
         new AlertDialog.Builder(context)
-                .setTitle("Bien jouer")
-                .setMessage("Bonne réponse")
+                .setTitle(title)
+                .setMessage(message)
                 .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int which) {
                         //close
@@ -29,10 +29,10 @@ public class ModalMessages {
                 .show();
     }
 
-    public void showWrongAnswerMessage(Context context) {
+    public void showWrongMessage(Context context, String title, String message) {
         new AlertDialog.Builder(context)
-                .setTitle("Désolé")
-                .setMessage("Mauvaise réponse")
+                .setTitle(title)
+                .setMessage(message)
                 .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int which) {
                         //close

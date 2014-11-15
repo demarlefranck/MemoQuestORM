@@ -106,11 +106,11 @@ public class Game1Activity extends ActionBarActivity implements View.OnClickList
         ModalMessages modalMessages = new ModalMessages();
 
         if(answerGamer.equals(quizContent.getSolution())){
-            modalMessages.showGoodAnswerMessage(this);
+            modalMessages.showGoodMessage(this, "Bien jouer", "Bonne réponse");
         }
         else{
 
-            modalMessages.showWrongAnswerMessage(this);
+            modalMessages.showWrongMessage(this, "Désolé", "Mauvaise réponse");
         }
     }
 

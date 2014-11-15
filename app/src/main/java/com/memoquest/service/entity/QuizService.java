@@ -1,4 +1,4 @@
-package com.memoquest.service;
+package com.memoquest.service.entity;
 
 import com.activeandroid.query.Select;
 import com.memoquest.model.db.Quiz;

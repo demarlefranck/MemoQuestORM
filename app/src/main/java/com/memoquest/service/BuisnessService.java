@@ -4,17 +4,20 @@ import com.activeandroid.ActiveAndroid;
 import com.memoquest.model.GlobalQuiz;
 import com.memoquest.model.db.Quiz;
 import com.memoquest.model.db.QuizContent;
+import com.memoquest.service.entity.QuizContentService;
+import com.memoquest.service.entity.QuizService;
+import com.memoquest.service.entity.UserService;
 
 /**
  * Created by franck on 30/10/2014.
  */
-public class BuisnessLayer {
+public class BuisnessService {
 
     private UserService userService;
     private QuizContentService quizContentService;
     private QuizService quizService;
 
-    public BuisnessLayer() {
+    public BuisnessService() {
         userService = new UserService();
         quizContentService = new QuizContentService();
         quizService = new QuizService();

@@ -6,7 +6,7 @@ import android.test.RenamingDelegatingContext;
 import com.activeandroid.ActiveAndroid;
 import com.memoquest.model.db.Quiz;
 import com.memoquest.model.db.QuizContent;
-import com.memoquest.service.QuizContentService;
+import com.memoquest.service.entity.QuizContentService;
 import com.test.memoquest.model.QuizContentTest;
 import com.test.memoquest.model.QuizTest;
 

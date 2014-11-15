@@ -8,24 +8,28 @@ import android.view.Menu;
 import android.view.MenuItem;
 
 import com.memoquest.app.R;
-import com.memoquest.app.game.Game1Activity;
-import com.memoquest.model.GlobalQuiz;
-import com.memoquest.model.db.Quiz;
-import com.memoquest.model.db.QuizContent;
-import com.memoquest.service.BuisnessLayer;
-import com.memoquest.service.QuizService;
-import com.test.memoquest.model.QuizContentTest;
-import com.test.memoquest.model.QuizTest;
-
-import java.util.ArrayList;
-import java.util.List;
+import com.memoquest.app.modal.ModalMessages;
+import com.memoquest.model.db.User;
+import com.memoquest.service.ConnexionService;
+import com.memoquest.service.entity.UserService;
+import com.memoquest.service.synchro.ManagerSynchroService;
 
 public class MainActivity extends ActionBarActivity {
+
+    private ModalMessages modalMessages;
+    private ConnexionService connexionService;
+    private UserService userService;
+    private ManagerSynchroService managerSynchroService;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        modalMessages = new ModalMessages();
+        connexionService = new ConnexionService();
+        userService = new UserService();
+        managerSynchroService = new ManagerSynchroService();
 
        //   testQuizContent();
     }
@@ -36,14 +40,139 @@ public class MainActivity extends ActionBarActivity {
         Log.i("", "MainActivity.class: onStart()");
         super.onStart();
 
-        Intent intentConnexion = new Intent(MainActivity.this, Game1Activity.class);
-        startActivity(intentConnexion);
+
+        test();
+
+        /*
+
+         Version OK
+
+
+        if(connexionService.isConnected(this)){
+
+            startWithConnection();
+
+        } else{
+
+            startWithoutConnection();
+        }
+
+        */
+
     }
 
+    private void test() {
+
+
+/*
+        Intent intentConnexion = new Intent(MainActivity.this, Game1Activity.class);
+        startActivity(intentConnexion);
+  */
+
+
+        User user = new User();
+
+        user.setActive(1);
+
+        user.save();
+
+        User userCurrent = userService.getUserActive();
+
+
+
+        if(userCurrent == null){
+            modalMessages.showWrongMessage(this, "TEST", "Pas de user acif");
+        }
+        else{
+            modalMessages.showGoodMessage(this, "TEST", "User actif trouve");
+        }
+
+
+
+
+    }
+
+
+    public void startWithConnection(){
+
+        modalMessages.showGoodMessage(this, "Good", "le téléphone est connecté");
+
+        User userCurrent = userService.getUserActive();
+
+        if(userCurrent == null){
+
+            Intent intentConnexion = new Intent(MainActivity.this, SwitchUserActivity.class);
+            startActivity(intentConnexion);
+        }
+        else{
+
+            //lancement des synchro donnees
+            managerSynchroService.updateAllData(this);
+
+            Intent intentMenu = new Intent(MainActivity.this, MenuActivity.class);
+            startActivity(intentMenu);
+        }
+    }
+
+    public void startWithoutConnection() {
+
+        User userCurrent = userService.getUserActive();
+
+        if(userCurrent == null){
+            modalMessages.showWrongMessage(this, "Probleme de connexion", "Une connexion internet est requise car vous n'êtes pas authentifié");
+        }
+        else{
+            Intent intentMenu = new Intent(MainActivity.this, MenuActivity.class);
+            startActivity(intentMenu);
+        }
+    }
+
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+
+        // Inflate the menu; this adds items to the action bar if it is present.
+        getMenuInflater().inflate(R.menu.main, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        // Handle action bar item clicks here. The action bar will
+        // automatically handle clicks on the Home/Up button, so long
+        // as you specify a parent activity in AndroidManifest.xml.
+        int id = item.getItemId();
+        if (id == R.id.action_settings) {
+            return true;
+        }
+        return super.onOptionsItemSelected(item);
+    }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/*
     private void testQuizContent() {
 
 
-        BuisnessLayer buisnessLayer = new BuisnessLayer();
+        BuisnessService buisnessLayer = new BuisnessService();
 
         QuizService quizService = new QuizService();
 
@@ -96,24 +225,4 @@ public class MainActivity extends ActionBarActivity {
 
         Log.d("DEBUBQuizGetAll", quizService.getAll().toString());
     }
-
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.main, menu);
-        return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
-        if (id == R.id.action_settings) {
-            return true;
-        }
-        return super.onOptionsItemSelected(item);
-    }
-}
+*/
