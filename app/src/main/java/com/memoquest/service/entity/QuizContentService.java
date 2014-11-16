@@ -1,6 +1,6 @@
 package com.memoquest.service.entity;
 
-import com.activeandroid.query.Select;
+import com.memoquest.dao.QuizContentDao;
 import com.memoquest.model.db.QuizContent;
 
 import java.util.Date;
@@ -10,6 +10,12 @@ import java.util.List;
  * Created by franck on 30/10/2014.
  */
 public class QuizContentService {
+
+    private QuizContentDao quizContentDao;
+
+    public QuizContentService() {
+        quizContentDao = new QuizContentDao();
+    }
 
     public void edit(QuizContent quizContent, Long userId) {
 
@@ -27,8 +33,6 @@ public class QuizContentService {
     }
 
     public List<QuizContent> getAll() {
-        return new Select()
-                .from(QuizContent.class)
-                .execute();
+        return quizContentDao.getAll();
     }
 }

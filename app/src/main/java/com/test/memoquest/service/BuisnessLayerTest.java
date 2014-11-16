@@ -7,7 +7,7 @@ import com.activeandroid.ActiveAndroid;
 import com.memoquest.model.GlobalQuiz;
 import com.memoquest.model.db.Quiz;
 import com.memoquest.model.db.QuizContent;
-import com.memoquest.service.BuisnessService;
+import com.memoquest.service.GlobalQuizService;
 import com.memoquest.service.entity.QuizContentService;
 import com.memoquest.service.entity.QuizService;
 import com.test.memoquest.model.QuizContentTest;
@@ -21,7 +21,7 @@ import java.util.List;
  */
 public class BuisnessLayerTest extends AndroidTestCase {
 
-    private BuisnessService buisnessLayer;
+    private GlobalQuizService buisnessLayer;
 
     private QuizService quizService;
     private QuizContentService quizContentService;
@@ -35,7 +35,7 @@ public class BuisnessLayerTest extends AndroidTestCase {
         quizService = new QuizService();
         quizContentService = new QuizContentService();
 
-        buisnessLayer = new BuisnessService();
+        buisnessLayer = new GlobalQuizService();
         quizServiceTest = new QuizServiceTest();
         quizContentServiceTest = new QuizContentServiceTest();
         quizContentTest = new QuizContentTest();

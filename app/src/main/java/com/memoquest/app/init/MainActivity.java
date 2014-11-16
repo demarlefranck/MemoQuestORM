@@ -70,12 +70,6 @@ public class MainActivity extends ActionBarActivity {
   */
 
 
-        User user = new User();
-
-        user.setActive(1);
-
-        user.save();
-
         User userCurrent = userService.getUserActive();
 
 
@@ -172,7 +166,7 @@ public class MainActivity extends ActionBarActivity {
     private void testQuizContent() {
 
 
-        BuisnessService buisnessLayer = new BuisnessService();
+        GlobalQuizService buisnessLayer = new GlobalQuizService();
 
         QuizService quizService = new QuizService();
 

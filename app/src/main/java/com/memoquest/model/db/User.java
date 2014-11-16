@@ -20,23 +20,22 @@ public class User extends Model {
 
 
     @Column(name = "LAST_NAME")
-    private Integer lastName;
+    private String lastName;
 
     @Column(name = "FIRST_NAME")
-    private Integer firstName;
-
+    private String firstName;
 
     @Column(name = "ROLE")
     private Integer role;
 
     @Column(name = "EMAIL")
-    private Integer email;
+    private String email;
 
     @Column(name = "LOGIN")
-    private Integer login;
+    private String login;
 
     @Column(name = "PASSWORD")
-    private Integer password;
+    private String password;
 
     @Column(name = "ACTIVE")
     private Integer active;
@@ -64,19 +63,19 @@ public class User extends Model {
         this.serverId = serverId;
     }
 
-    public Integer getLastName() {
+    public String getLastName() {
         return lastName;
     }
 
-    public void setLastName(Integer lastName) {
+    public void setLastName(String lastName) {
         this.lastName = lastName;
     }
 
-    public Integer getFirstName() {
+    public String getFirstName() {
         return firstName;
     }
 
-    public void setFirstName(Integer firstName) {
+    public void setFirstName(String firstName) {
         this.firstName = firstName;
     }
 
@@ -88,27 +87,27 @@ public class User extends Model {
         this.role = role;
     }
 
-    public Integer getEmail() {
+    public String getEmail() {
         return email;
     }
 
-    public void setEmail(Integer email) {
+    public void setEmail(String email) {
         this.email = email;
     }
 
-    public Integer getLogin() {
+    public String getLogin() {
         return login;
     }
 
-    public void setLogin(Integer login) {
+    public void setLogin(String login) {
         this.login = login;
     }
 
-    public Integer getPassword() {
+    public String getPassword() {
         return password;
     }
 
-    public void setPassword(Integer password) {
+    public void setPassword(String password) {
         this.password = password;
     }
 
@@ -156,12 +155,12 @@ public class User extends Model {
     public String toString() {
         return "User{" +
                 "serverId=" + serverId +
-                ", lastName=" + lastName +
-                ", firstName=" + firstName +
+                ", lastName='" + lastName + '\'' +
+                ", firstName='" + firstName + '\'' +
                 ", role=" + role +
-                ", email=" + email +
-                ", login=" + login +
-                ", password=" + password +
+                ", email='" + email + '\'' +
+                ", login='" + login + '\'' +
+                ", password='" + password + '\'' +
                 ", active=" + active +
                 ", createUser=" + createUser +
                 ", createTime=" + createTime +

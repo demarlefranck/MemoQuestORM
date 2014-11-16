@@ -10,6 +10,7 @@ import android.widget.TextView;
 
 import com.memoquest.app.R;
 import com.memoquest.app.modal.ModalMessages;
+import com.memoquest.model.db.User;
 import com.memoquest.service.ConnexionService;
 
 public class ConnectionActivity extends Activity  implements View.OnClickListener {
@@ -45,7 +46,18 @@ public class ConnectionActivity extends Activity  implements View.OnClickListene
 
         switch (v.getId()) {
             case R.id.connexionText:
-                if(isAuthentifiate()){
+
+
+                User user = null;
+                user = isAuthentifiate();
+
+                if(user != null){
+
+                    /*
+                        Voir Pour envoyer le user a l'autre intent
+                     */
+
+
                     Intent intent = new Intent(ConnectionActivity.this, MenuActivity.class);
                     startActivity(intent);
                 }
@@ -66,39 +78,29 @@ public class ConnectionActivity extends Activity  implements View.OnClickListene
         }
     }
 
-    private Boolean isAuthentifiate() {
+    private User isAuthentifiate() {
 
-        ConnexionService connexionService = new ConnexionService();
-
+        User user = null;
         String empty = "";
+        ConnexionService connexionService = new ConnexionService();
         String loginTextStr = String.valueOf(loginText.getText());
         String passwordTextStr = String.valueOf(passwordText.getText());
 
         if (loginTextStr.equals(empty)){
+
             modalMessages.showWrongMessage(this, "erreur de saisie", "Veuillez saisir votre email");
-            return false;
 
         } else if (passwordTextStr.equals(empty)){
+
             modalMessages.showWrongMessage(this, "erreur de saisie", "Veuillez saisir votre password");
-            return false;
 
         } else {
-          //  try {
-                if (connexionService.isAuthentifiateByServeur(loginTextStr, passwordTextStr) == false) {
-                    modalMessages.showWrongMessage(this, "erreur d'authentification", "L'authentification a échouée");
-                    return false;
-                }
 
-        /*
-        } catch (TechnicalAppException e) {
-                Log.e("ERROR", e.toString());
-                Alerte.showAlertDialog("Probleme Systeme", this.getClass().getSimpleName() + "isAuthentifiate(): " + e.toString(), this);
-            } catch (FonctionalAppException e) {
-                Log.e("ERROR", e.toString());
-                Alerte.showAlertDialog("Probleme Systeme", this.getClass().getSimpleName() + "isAuthentifiate(): " + e.toString(), this);
+            user = connexionService.isAuthentifiate(loginTextStr, passwordTextStr);
+            if (user == null) {
+                modalMessages.showWrongMessage(this, "erreur d'authentification", "L'authentification a échouée");
             }
-        */
         }
-        return true;
+        return user;
     }
 }

@@ -11,13 +11,13 @@ import com.memoquest.service.entity.UserService;
 /**
  * Created by franck on 30/10/2014.
  */
-public class BuisnessService {
+public class GlobalQuizService {
 
     private UserService userService;
     private QuizContentService quizContentService;
     private QuizService quizService;
 
-    public BuisnessService() {
+    public GlobalQuizService() {
         userService = new UserService();
         quizContentService = new QuizContentService();
         quizService = new QuizService();
