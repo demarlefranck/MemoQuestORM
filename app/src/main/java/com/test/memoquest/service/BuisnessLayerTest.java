@@ -7,6 +7,7 @@ import com.activeandroid.ActiveAndroid;
 import com.memoquest.model.GlobalQuiz;
 import com.memoquest.model.db.Quiz;
 import com.memoquest.model.db.QuizContent;
+import com.memoquest.model.db.User;
 import com.memoquest.service.GlobalQuizService;
 import com.memoquest.service.entity.QuizContentService;
 import com.memoquest.service.entity.QuizService;
@@ -21,7 +22,7 @@ import java.util.List;
  */
 public class BuisnessLayerTest extends AndroidTestCase {
 
-    private GlobalQuizService buisnessLayer;
+    private GlobalQuizService globalQuizService;
 
     private QuizService quizService;
     private QuizContentService quizContentService;
@@ -35,7 +36,7 @@ public class BuisnessLayerTest extends AndroidTestCase {
         quizService = new QuizService();
         quizContentService = new QuizContentService();
 
-        buisnessLayer = new GlobalQuizService();
+        globalQuizService = new GlobalQuizService();
         quizServiceTest = new QuizServiceTest();
         quizContentServiceTest = new QuizContentServiceTest();
         quizContentTest = new QuizContentTest();
@@ -56,6 +57,10 @@ public class BuisnessLayerTest extends AndroidTestCase {
         assertEquals(0, quizService.getAll().size());
         assertEquals(0, quizContentService.getAll().size());
 
+        User user = new User();
+        user.setActive(1);
+        user.save();
+
         Quiz quiz = quizTest.createOneQuiz(1);
         QuizContent quizContent1 = quizContentTest.createOneQuizContent(1, quiz);
 
@@ -66,9 +71,10 @@ public class BuisnessLayerTest extends AndroidTestCase {
         globalQuizExpected.setQuiz(quiz);
         globalQuizExpected.setQuizContents(quizContents);
 
-        buisnessLayer.editGlobalQuiz(globalQuizExpected);
-        GlobalQuiz globalQuizResult = buisnessLayer.findGlobalQuiz(quiz);
+        globalQuizService.editGlobalQuiz(globalQuizExpected);
+        GlobalQuiz globalQuizResult = globalQuizService.findGlobalQuiz(quiz);
 
+        user.delete();
         assertEquals(globalQuizResult, globalQuizExpected);
     }
 
@@ -79,6 +85,10 @@ public class BuisnessLayerTest extends AndroidTestCase {
          */
         assertEquals(0, quizService.getAll().size());
         assertEquals(0, quizContentService.getAll().size());
+
+        User user = new User();
+        user.setActive(1);
+        user.save();
 
         Quiz quiz = quizTest.createOneQuiz(1);
 
@@ -95,10 +105,12 @@ public class BuisnessLayerTest extends AndroidTestCase {
         globalQuizExpected.setQuiz(quiz);
         globalQuizExpected.setQuizContents(quizContents);
 
-        buisnessLayer.editGlobalQuiz(globalQuizExpected);
+        globalQuizService.editGlobalQuiz(globalQuizExpected);
 
-        GlobalQuiz globalQuizResult = buisnessLayer.findGlobalQuiz(quiz);
+        GlobalQuiz globalQuizResult = globalQuizService.findGlobalQuiz(quiz);
         assertEquals(globalQuizResult, globalQuizExpected);
+
+        user.delete();
     }
 
     public void testEditTreeGlobalQuizWithdifferentQuizContentOK() {
@@ -108,6 +120,10 @@ public class BuisnessLayerTest extends AndroidTestCase {
          */
         assertEquals(0, quizService.getAll().size());
         assertEquals(0, quizContentService.getAll().size());
+
+        User user = new User();
+        user.setActive(1);
+        user.save();
 
         Quiz quiz1 = quizTest.createOneQuiz(1);
 
@@ -119,9 +135,9 @@ public class BuisnessLayerTest extends AndroidTestCase {
         globalQuizExpected1.setQuiz(quiz1);
         globalQuizExpected1.setQuizContents(quizContents1);
 
-        buisnessLayer.editGlobalQuiz(globalQuizExpected1);
+        globalQuizService.editGlobalQuiz(globalQuizExpected1);
 
-        GlobalQuiz globalQuizResult1 = buisnessLayer.findGlobalQuiz(quiz1);
+        GlobalQuiz globalQuizResult1 = globalQuizService.findGlobalQuiz(quiz1);
         assertEquals(globalQuizResult1, globalQuizExpected1);
         assertEquals(globalQuizResult1.getQuizContents().size(), globalQuizExpected1.getQuizContents().size());
 
@@ -140,9 +156,9 @@ public class BuisnessLayerTest extends AndroidTestCase {
         globalQuizExpected2.setQuiz(quiz2);
         globalQuizExpected2.setQuizContents(quizContents2);
 
-        buisnessLayer.editGlobalQuiz(globalQuizExpected2);
+        globalQuizService.editGlobalQuiz(globalQuizExpected2);
 
-        GlobalQuiz globalQuizResult2 = buisnessLayer.findGlobalQuiz(quiz2);
+        GlobalQuiz globalQuizResult2 = globalQuizService.findGlobalQuiz(quiz2);
         assertEquals(globalQuizResult2, globalQuizExpected2);
         assertEquals(globalQuizResult2.getQuizContents().size(), globalQuizExpected2.getQuizContents().size());
 
@@ -163,13 +179,15 @@ public class BuisnessLayerTest extends AndroidTestCase {
         globalQuizExpected3.setQuiz(quiz3);
         globalQuizExpected3.setQuizContents(quizContents3);
 
-        buisnessLayer.editGlobalQuiz(globalQuizExpected3);
+        globalQuizService.editGlobalQuiz(globalQuizExpected3);
 
-        GlobalQuiz globalQuizResult3 = buisnessLayer.findGlobalQuiz(quiz3);
+        GlobalQuiz globalQuizResult3 = globalQuizService.findGlobalQuiz(quiz3);
         assertEquals(globalQuizResult3, globalQuizExpected3);
         assertEquals(globalQuizResult3.getQuizContents().size(), globalQuizExpected3.getQuizContents().size());
         assertEquals(3, quizService.getAll().size());
         assertEquals(6, quizContentService.getAll().size());
+
+        user.delete();
     }
 
     public void testDeleteGlobalQuiz() {
@@ -179,6 +197,10 @@ public class BuisnessLayerTest extends AndroidTestCase {
          */
         assertEquals(0, quizService.getAll().size());
         assertEquals(0, quizContentService.getAll().size());
+
+        User user = new User();
+        user.setActive(1);
+        user.save();
 
         Quiz quiz = quizTest.createOneQuiz(1);
 
@@ -195,17 +217,19 @@ public class BuisnessLayerTest extends AndroidTestCase {
         globalQuizExpected.setQuiz(quiz);
         globalQuizExpected.setQuizContents(quizContents);
 
-        buisnessLayer.editGlobalQuiz(globalQuizExpected);
+        globalQuizService.editGlobalQuiz(globalQuizExpected);
         assertEquals(1, quizService.getAll().size());
         assertEquals(3, quizContentService.getAll().size());
 
-        GlobalQuiz globalQuizResult = buisnessLayer.findGlobalQuiz(quiz);
+        GlobalQuiz globalQuizResult = globalQuizService.findGlobalQuiz(quiz);
         assertEquals(globalQuizResult, globalQuizExpected);
         assertEquals(3, globalQuizResult.getQuizContents().size());
 
-        buisnessLayer.deleteGlobalQuiz(globalQuizResult);
+        globalQuizService.deleteGlobalQuiz(globalQuizResult);
 
         assertEquals(0, quizService.getAll().size());
         assertEquals(0, quizContentService.getAll().size());
+
+        user.delete();
     }
 }
