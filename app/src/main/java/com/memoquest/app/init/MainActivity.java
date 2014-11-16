@@ -41,12 +41,12 @@ public class MainActivity extends ActionBarActivity {
         super.onStart();
 
 
-        test();
+       // test();
 
         /*
 
          Version OK
-
+*/
 
         if(connexionService.isConnected(this)){
 
@@ -57,7 +57,6 @@ public class MainActivity extends ActionBarActivity {
             startWithoutConnection();
         }
 
-        */
 
     }
 
@@ -89,7 +88,7 @@ public class MainActivity extends ActionBarActivity {
 
     public void startWithConnection(){
 
-        modalMessages.showGoodMessage(this, "Good", "le téléphone est connecté");
+      //  modalMessages.showGoodMessage(this, "Good", "le téléphone est connecté");
 
         User userCurrent = userService.getUserActive();
 

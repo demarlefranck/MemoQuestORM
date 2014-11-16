@@ -4,8 +4,6 @@ import com.memoquest.dao.UserDao;
 import com.memoquest.dao.rest.UserRestDao;
 import com.memoquest.model.db.User;
 
-import java.security.MessageDigest;
-import java.security.NoSuchAlgorithmException;
 import java.util.Date;
 import java.util.List;
 
@@ -23,7 +21,7 @@ public class UserService {
     }
 
     public User isAuthentifiateByServeur(String login, String password) {
-        return userRestDao.isAuthentifiateByServeur(login, toMD5(password));
+        return userRestDao.isAuthentifiateByServeur(login, password);
     }
 
     public void edit(User user, Long userId) {
@@ -50,41 +48,16 @@ public class UserService {
     }
 
 
-    /*
-    Permet de crypter le mot de passe en MD5
+    public void setUserToActive(User user) {
+        updateAllUserToNoActif();
+        user.setActive(1);
+        edit(user, (long) -1);
+    }
 
-    voir pour SHA1
- */
-    private String toMD5( String password ){
-
-        String saltWord	= "PourSecuriserLeMotDePasse";
-        MessageDigest messageDigest;
-        StringBuilder 	stringBuilder 		= 	new StringBuilder();
-        StringBuilder 	stringBuilderTemp 	= 	new StringBuilder();
-
-        try {
-
-            //messageDigest = MessageDigest.getInstance( "MD5" );
-
-
-            //testSHA1
-            messageDigest = MessageDigest.getInstance( "SHA1" );
-            stringBuilderTemp.append(password);
-            stringBuilderTemp.append(saltWord);
-            messageDigest.update(stringBuilderTemp.toString().getBytes());
-
-            byte[] 	byteData = messageDigest.digest();
-
-            for (int i = 0; i < byteData.length; i++) {
-
-                stringBuilder.append(Integer.toString((byteData[i] & 0xff) + 0x100, 16).substring(1));
-
-            }
-        } catch ( NoSuchAlgorithmException e ) {
-
-            throw new RuntimeException(this.getClass().getSimpleName() + "Methode: toMD5(): Probleme lors de l'encryptage du mot de passe: " + e.toString());
+    public void updateAllUserToNoActif() {
+        for(User user : getAll()){
+            user.setActive(0);
+            edit(user, (long) -1);
         }
-
-        return stringBuilder.toString();
     }
 }

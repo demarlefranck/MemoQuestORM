@@ -40,6 +40,7 @@ public class UserServiceTest extends AndroidTestCase {
         /*
                check db is empty
          */
+        testDeleteAll();
         assertEquals(0, userService.getAll().size());
 
         User user1 = new User();
@@ -50,7 +51,7 @@ public class UserServiceTest extends AndroidTestCase {
 
         User user2 = new User();
         user2.setActive(0);
-        userService.edit(user1, (long) -1);
+        userService.edit(user2, (long) -1);
         assertEquals(2, userService.getAll().size());
 
         User userResult = null;
@@ -66,6 +67,7 @@ public class UserServiceTest extends AndroidTestCase {
         /*
                check db is empty
          */
+        testDeleteAll();
         assertEquals(0, userService.getAll().size());
 
         User user1 = new User();
@@ -76,7 +78,7 @@ public class UserServiceTest extends AndroidTestCase {
 
         User user2 = new User();
         user2.setActive(1);
-        userService.edit(user1, (long) -1);
+        userService.edit(user2, (long) -1);
         assertEquals(2, userService.getAll().size());
 
         User userResult = null;
