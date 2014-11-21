@@ -15,4 +15,19 @@ public class QuizDao {
                 .from(Quiz.class)
                 .execute();
     }
+
+    public Quiz findUniqueById(Long quizId) {
+
+        List<Quiz> quizs = new Select() .from(Quiz.class)
+                                        .where("id = ?", quizId)
+                                        .execute();
+
+        if(quizs.size() > 1){
+            throw new RuntimeException("Any quiz in findUniqueById()");
+        }
+        else if(quizs.size() == 1){
+            return quizs.get(0);
+        }
+        return null;
+    }
 }

@@ -12,22 +12,25 @@ import com.memoquest.app.R;
 import com.memoquest.app.modal.ModalMessages;
 import com.memoquest.model.db.User;
 import com.memoquest.service.ConnexionService;
+import com.memoquest.service.entity.UserService;
 
 public class ConnectionActivity extends Activity  implements View.OnClickListener {
 
-    private ModalMessages modalMessages;
     private EditText loginText;
     private EditText passwordText;
     private TextView connexionText;
     private TextView signinText;
     private TextView passwordForbidText;
+    private ConnexionService connexionService;
+    private UserService userService;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_connection);
 
-        modalMessages = new ModalMessages();
+        connexionService = new ConnexionService();
+        userService = new UserService();
 
         loginText = (EditText) this.findViewById(R.id.loginText);
         passwordText = (EditText) this.findViewById(R.id.passwordText);
@@ -51,12 +54,11 @@ public class ConnectionActivity extends Activity  implements View.OnClickListene
                 User user = null;
                 user = isAuthentifiate();
 
+
                 if(user != null){
 
-                    /*
-                        Voir Pour envoyer le user a l'autre intent
-                     */
-
+                    userService.edit(user, (long) -1);
+                    userService.editUserToActive(user);
 
                     Intent intent = new Intent(ConnectionActivity.this, MenuActivity.class);
                     startActivity(intent);
@@ -73,7 +75,7 @@ public class ConnectionActivity extends Activity  implements View.OnClickListene
                 }
                 break;
             default:
-                modalMessages.showWrongMessage(this, "Probleme Technique", this.getClass().getSimpleName() + "Methode: onClick():" + "Switch default.....");
+                ModalMessages.showWrongMessage(this, "Probleme Technique", this.getClass().getSimpleName() + "Methode: onClick():" + "Switch default.....");
                 break;
         }
     }
@@ -82,23 +84,23 @@ public class ConnectionActivity extends Activity  implements View.OnClickListene
 
         User user = null;
         String empty = "";
-        ConnexionService connexionService = new ConnexionService();
         String loginTextStr = String.valueOf(loginText.getText());
         String passwordTextStr = String.valueOf(passwordText.getText());
 
         if (loginTextStr.equals(empty)){
 
-            modalMessages.showWrongMessage(this, "erreur de saisie", "Veuillez saisir votre email");
+            ModalMessages.showWrongMessage(this, "erreur de saisie", "Veuillez saisir votre email");
 
         } else if (passwordTextStr.equals(empty)){
 
-            modalMessages.showWrongMessage(this, "erreur de saisie", "Veuillez saisir votre password");
+            ModalMessages.showWrongMessage(this, "erreur de saisie", "Veuillez saisir votre password");
 
         } else {
 
             user = connexionService.isAuthentifiate(loginTextStr, passwordTextStr);
+
             if (user == null) {
-                modalMessages.showWrongMessage(this, "erreur d'authentification", "L'authentification a échouée");
+                ModalMessages.showWrongMessage(this, "erreur d'authentification", "L'authentification a échouée");
             }
         }
         return user;

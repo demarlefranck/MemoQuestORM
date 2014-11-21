@@ -5,7 +5,6 @@ import com.activeandroid.annotation.Column;
 import com.activeandroid.annotation.Table;
 
 import java.util.Date;
-import java.util.List;
 
 /**
  * Created by franck on 30/10/2014.
@@ -89,18 +88,20 @@ public class Quiz extends Model {
         this.updateTime = updateTime;
     }
 
+
+    /*
     public List<QuizContent> getQuizContents() {
 
         return getMany(QuizContent.class, "QUIZ_FK");
     }
-
+*/
 
     @Override
     public String toString() {
         return "Quiz{" +
                 "name='" + name + '\'' +
                 //      ", skill=" + skill +
-                ", quizContents=" + getQuizContents().toString() +
+              //  ", quizContents=" + getQuizContents().toString() +
                 ", createUser=" + createUser +
                 ", createTime=" + createTime +
                 ", updateUser=" + updateUser +

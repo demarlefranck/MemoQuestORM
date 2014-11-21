@@ -48,13 +48,13 @@ public class UserService {
     }
 
 
-    public void setUserToActive(User user) {
-        updateAllUserToNoActif();
+    public void editUserToActive(User user) {
+        editAllUserToNoActif();
         user.setActive(1);
         edit(user, (long) -1);
     }
 
-    public void updateAllUserToNoActif() {
+    public void editAllUserToNoActif() {
         for(User user : getAll()){
             user.setActive(0);
             edit(user, (long) -1);

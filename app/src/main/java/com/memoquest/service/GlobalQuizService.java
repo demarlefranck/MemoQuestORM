@@ -8,6 +8,8 @@ import com.memoquest.service.entity.QuizContentService;
 import com.memoquest.service.entity.QuizService;
 import com.memoquest.service.entity.UserService;
 
+import java.util.List;
+
 /**
  * Created by franck on 30/10/2014.
  */
@@ -44,7 +46,11 @@ public class GlobalQuizService {
 
         GlobalQuiz globalQuiz = new GlobalQuiz();
         globalQuiz.setQuiz(quiz);
-        globalQuiz.setQuizContents(quiz.getQuizContents());
+
+        List<QuizContent> quizContents = quizContentService.findByQuiz(quiz.getServerId());
+
+
+        globalQuiz.setQuizContents(quizContents);
         return globalQuiz;
     }
 

@@ -10,5 +10,7 @@
     <string name="signin_link"><a href="http://memoquest.fr/register.php">S\'inscrire sur MemoQuest</a></string>
     <string name="pwdforgotten_link"><a href="http://memoquest.fr/pwdforgotten.php">Mot de passe oublié ?</a></string>
     <string name="title_activity_switch_user">SwitchUserActivity</string>
+    <string name="title_activity_game_choice">GameChoiceActivity</string>
+    <string name="title_activity_global_quiz">GlobalQuizActivity</string>
 
 </resources>

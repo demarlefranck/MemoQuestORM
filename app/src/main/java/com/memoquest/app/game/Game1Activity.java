@@ -16,6 +16,7 @@ import android.widget.TextView;
 import com.memoquest.app.R;
 import com.memoquest.app.modal.ModalMessages;
 import com.memoquest.model.db.QuizContent;
+import com.memoquest.service.entity.QuizContentService;
 
 import java.io.ByteArrayOutputStream;
 import java.io.File;
@@ -25,34 +26,96 @@ import java.io.IOException;
 public class Game1Activity extends ActionBarActivity implements View.OnClickListener {
 
     private QuizContent quizContent;
+    private QuizContentService quizContentService;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_game1);
 
+        quizContentService = new QuizContentService();
+/*
+        long quizContentId = getObjetbunbleValue();
+
+        if(quizContentId != -1){
+
+            quizContent = quizContentService.findUniqueById(quizContentId);
 
 
-        /*
-            Simulation d'un objet QuizContent
-         */
-        quizContent = getQuizContentForGame1();
+
+            Log.d("DDDDDDDDDDEEEEEEEEEBBBBBBBBUUUUUUUUUUGGGGGGGGG", "quizContentId:  " + quizContentId);
 
 
+            Log.d("DDDDDDDDDDEEEEEEEEEBBBBBBBBUUUUUUUUUUGGGGGGGGG", quizContent.toString());
+        }
+        else{
+            ModalMessages.showWrongMessage(this, "Probleme Technique", this.getClass().getSimpleName() + "onCreate(): " + "Probleme d'identification de ObjetbunbleValue  :  getObjetbunbleValue() = -1");
+        }
+*/
 
+        showView();
+
+    }
+
+    private long getObjetbunbleValue(){
+        long objetbunbleValue = -1;
+        String bundleKey = "quizContentId";
+
+        Bundle objetbunble = this.getIntent().getExtras();
+
+        if (objetbunble != null && objetbunble.containsKey(bundleKey)){
+
+            objetbunbleValue = this.getIntent().getLongExtra(bundleKey, -1);
+
+        } else{
+            ModalMessages.showWrongMessage(this, "Probleme Technique", this.getClass().getSimpleName() + "onCreate(): " + "Probleme d'identification de ObjetbunbleValue");
+
+        }
+        return objetbunbleValue;
     }
 
 
 
-
-
-
+/*
     @Override
     protected void onStart() {
         super.onStart();
+*/
+    private void showView() {
+
+
+
+
+        long quizContentId = getObjetbunbleValue();
+
+        if(quizContentId != -1){
+
+            quizContent = quizContentService.findUniqueById(quizContentId);
+
+
+
+            Log.d("DDDDDDDDDDEEEEEEEEEBBBBBBBBUUUUUUUUUUGGGGGGGGG", "quizContentId:  " + quizContentId);
+
+
+            Log.d("DDDDDDDDDDEEEEEEEEEBBBBBBBBUUUUUUUUUUGGGGGGGGG", quizContent.toString());
+        }
+        else{
+            ModalMessages.showWrongMessage(this, "Probleme Technique", this.getClass().getSimpleName() + "onCreate(): " + "Probleme d'identification de ObjetbunbleValue  :  getObjetbunbleValue() = -1");
+        }
+
+
+
+
+
+
+
+        Log.d("DDDDDDDDDDEEEEEEEEEBBBBBBBBUUUUUUUUUUGGGGGGGGG", quizContent.toString());
+
 
         TextView textViewQuestion = (TextView) findViewById(R.id.textViewQuestion);
-        textViewQuestion.setText(quizContent.getQuestion());
+        if(quizContent.getQuestion() != null){
+            textViewQuestion.setText(quizContent.getQuestion());
+        }
 
         File file1 = new File(Environment.getExternalStorageDirectory() + File.separator + "MemoQuest" + File.separator + quizContent.getAnswerA());
         if(file1.exists()) {

@@ -16,7 +16,6 @@ public class QuizContent extends Model {
     private Integer serverId;
 
     @Column(name = "QUESTION_TYPE")
-    // private int questionType;
     private Integer questionType;
 
     @Column(name = "QUESTION")
@@ -37,19 +36,16 @@ public class QuizContent extends Model {
     @Column(name = "SOLUTION")
     private String solution;
 
-    //  @Column(name = "QUIZ_FK", onDelete = Column.ForeignKeyAction.CASCADE)
-    @Column(name = "QUIZ_FK")
-    private Quiz quiz;
+    @Column(name = "QUIZ_SERVER_ID")
+    private Integer quizServerId;
 
     @Column(name = "CREATED_BY")
-    //  public int createUser;
     private Long createUser;
 
     @Column(name = "CREATED")
     private Date createTime;
 
     @Column(name = "UPDATED_BY")
-    //  private int updateUser;
     private Long updateUser;
 
     @Column(name = "UPDATED")
@@ -119,12 +115,12 @@ public class QuizContent extends Model {
         this.solution = solution;
     }
 
-    public Quiz getQuiz() {
-        return quiz;
+    public Integer getQuizServerId() {
+        return quizServerId;
     }
 
-    public void setQuiz(Quiz quiz) {
-        this.quiz = quiz;
+    public void setQuizServerId(Integer quizServerId) {
+        this.quizServerId = quizServerId;
     }
 
     public Long getCreateUser() {
@@ -160,27 +156,18 @@ public class QuizContent extends Model {
     }
 
 
-    /*
-            public static List<QuizContent> getAll(Quiz quiz) {
-                // This is how you execute a query
-                return new Select()
-                        .from(QuizContent.class)
-                        .where("QUIZ_ID = ?", quiz.getId())
-                      //  .orderBy("Name ASC")
-                        .execute();
-            }
-        */
     @Override
     public String toString() {
         return "QuizContent{" +
-                "questionType=" + questionType +
+                "serverId=" + serverId +
+                ", questionType=" + questionType +
                 ", question='" + question + '\'' +
                 ", answerA='" + answerA + '\'' +
                 ", answerB='" + answerB + '\'' +
                 ", answerC='" + answerC + '\'' +
                 ", answerD='" + answerD + '\'' +
                 ", solution='" + solution + '\'' +
-                //        ", quiz=" + quiz +
+                ", quizServerId=" + quizServerId +
                 ", createUser=" + createUser +
                 ", createTime=" + createTime +
                 ", updateUser=" + updateUser +

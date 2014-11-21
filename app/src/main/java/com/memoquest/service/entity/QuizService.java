@@ -33,6 +33,11 @@ public class QuizService {
     }
 
     public List<Quiz> getAll() {
+
         return quizDao.getAll();
+    }
+
+    public Quiz findUniqueById(long quizId) {
+        return quizDao.findUniqueById(quizId);
     }
 }

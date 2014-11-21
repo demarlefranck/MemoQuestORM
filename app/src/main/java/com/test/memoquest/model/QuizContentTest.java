@@ -11,7 +11,7 @@ public class QuizContentTest {
     public QuizContent createOneQuizContent(Integer number, Quiz quiz) {
 
         QuizContent quizContent = new QuizContent();
-        quizContent.setQuiz(quiz);
+        quizContent.setQuizServerId(quiz.getServerId());
         quizContent.setServerId(number);
         quizContent.setQuestionType(number);
         quizContent.setQuestion("question" + number);

@@ -35,4 +35,14 @@ public class QuizContentService {
     public List<QuizContent> getAll() {
         return quizContentDao.getAll();
     }
+
+    public List<QuizContent> findByQuiz(Integer quizServerId) {
+        return quizContentDao.findByQuiz(quizServerId);
+
+    }
+
+
+    public QuizContent findUniqueById(long quizContentId) {
+        return quizContentDao.findUniqueById(quizContentId);
+    }
 }

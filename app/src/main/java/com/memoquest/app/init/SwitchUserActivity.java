@@ -23,7 +23,6 @@ import java.util.Map;
 public class SwitchUserActivity extends Activity implements View.OnClickListener {
 
     private UserService userService;
-    private ModalMessages modalMessages;
     private TextView newUseText;
     private List<User> users;
 
@@ -42,14 +41,13 @@ public class SwitchUserActivity extends Activity implements View.OnClickListener
 
     public void onClick(View v) {
 
-
         switch (v.getId()) {
             case R.id.newUseText:
                 Intent intent = new Intent(SwitchUserActivity.this, ConnectionActivity.class);
                 startActivity(intent);
             break;
             default:
-                modalMessages.showWrongMessage(this, "Probleme Technique", this.getClass().getSimpleName() + "Methode: onClick():" + "Switch default.....");
+                ModalMessages.showWrongMessage(this, "Probleme Technique", this.getClass().getSimpleName() + "Methode: onClick():" + "Switch default.....");
             break;
         }
     }
@@ -92,14 +90,11 @@ public class SwitchUserActivity extends Activity implements View.OnClickListener
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 
+            User user = users.get(position);
+            userService.editUserToActive(user);
 
-                    User user = users.get(position);
-
-                    userService.setUserToActive(user);
-
-                    Intent intentMenu = new Intent(SwitchUserActivity.this, MenuActivity.class);
-                    startActivity(intentMenu);
-
+            Intent intentMenu = new Intent(SwitchUserActivity.this, MenuActivity.class);
+            startActivity(intentMenu);
             }
         });
     }

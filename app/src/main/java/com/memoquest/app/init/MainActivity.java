@@ -9,14 +9,19 @@ import android.view.MenuItem;
 
 import com.memoquest.app.R;
 import com.memoquest.app.modal.ModalMessages;
+import com.memoquest.model.db.Quiz;
+import com.memoquest.model.db.QuizContent;
 import com.memoquest.model.db.User;
 import com.memoquest.service.ConnexionService;
+import com.memoquest.service.entity.QuizContentService;
+import com.memoquest.service.entity.QuizService;
 import com.memoquest.service.entity.UserService;
 import com.memoquest.service.synchro.ManagerSynchroService;
+import com.test.memoquest.model.QuizContentTest;
+import com.test.memoquest.model.QuizTest;
 
 public class MainActivity extends ActionBarActivity {
 
-    private ModalMessages modalMessages;
     private ConnexionService connexionService;
     private UserService userService;
     private ManagerSynchroService managerSynchroService;
@@ -26,7 +31,6 @@ public class MainActivity extends ActionBarActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        modalMessages = new ModalMessages();
         connexionService = new ConnexionService();
         userService = new UserService();
         managerSynchroService = new ManagerSynchroService();
@@ -41,13 +45,30 @@ public class MainActivity extends ActionBarActivity {
         super.onStart();
 
 
-       // test();
 
         /*
+            section pour les tests
+         */
+       // test();
 
-         Version OK
-*/
+        QuizService quizService = new QuizService();
 
+        if(quizService.getAll().size() == 0){
+            insertSampleData();
+        }
+        /*
+            fin de section pour les tests
+         */
+
+
+
+
+
+
+
+        /*
+            Version OK
+        */
         if(connexionService.isConnected(this)){
 
             startWithConnection();
@@ -56,6 +77,61 @@ public class MainActivity extends ActionBarActivity {
 
             startWithoutConnection();
         }
+
+
+    }
+
+    private void insertSampleData() {
+
+        User user1 = connexionService.isAuthentifiate("demarl_f", "eip");
+        userService.edit(user1, (long) -1);
+        userService.editUserToActive(user1);
+
+        User user2 = connexionService.isAuthentifiate("dupe_j", "eip");
+        userService.edit(user2, (long) -1);
+        userService.editUserToActive(user2);
+
+        User user3 = connexionService.isAuthentifiate("chave_k", "eip");
+        userService.edit(user3, (long) -1);
+        userService.editUserToActive(user3);
+
+        User user4 = connexionService.isAuthentifiate("fourni_c", "eip");
+        userService.edit(user4, (long) -1);
+        userService.editUserToActive(user4);
+
+        User user5 = connexionService.isAuthentifiate("grosje_s", "eip");
+        userService.edit(user5, (long) -1);
+        userService.editUserToActive(user5);
+
+        User user6 = connexionService.isAuthentifiate("devill_b", "eip");
+        userService.edit(user6, (long) -1);
+        userService.editUserToActive(user6);
+
+        QuizService quizService = new QuizService();
+        QuizContentService quizContentService = new QuizContentService();
+        QuizTest quizTest = new QuizTest();
+        QuizContentTest quizContentTest = new QuizContentTest();
+
+        for(int i = 0; i != 10; i++){
+
+            Quiz quiz = quizTest.createOneQuiz(i);
+
+            quizService.edit(quiz, (long) -10);
+
+
+            for(int j = 0; j != 5; j++){
+
+                QuizContent quizContent = quizContentTest.createOneQuizContent(j, quiz);
+
+
+
+                quizContentService.edit(quizContent, (long) -10);
+
+
+
+            }
+        }
+
 
 
     }
@@ -74,15 +150,11 @@ public class MainActivity extends ActionBarActivity {
 
 
         if(userCurrent == null){
-            modalMessages.showWrongMessage(this, "TEST", "Pas de user acif");
+            ModalMessages.showWrongMessage(this, "TEST", "Pas de user acif");
         }
         else{
-            modalMessages.showGoodMessage(this, "TEST", "User actif trouve");
+            ModalMessages.showGoodMessage(this, "TEST", "User actif trouve");
         }
-
-
-
-
     }
 
 
@@ -112,7 +184,7 @@ public class MainActivity extends ActionBarActivity {
         User userCurrent = userService.getUserActive();
 
         if(userCurrent == null){
-            modalMessages.showWrongMessage(this, "Probleme de connexion", "Une connexion internet est requise car vous n'êtes pas authentifié");
+            ModalMessages.showWrongMessage(this, "Probleme de connexion", "Une connexion internet est requise car vous n'êtes pas authentifié");
         }
         else{
             Intent intentMenu = new Intent(MainActivity.this, MenuActivity.class);

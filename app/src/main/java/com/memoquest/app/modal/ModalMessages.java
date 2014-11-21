@@ -12,7 +12,7 @@ import com.memoquest.app.R;
 public class ModalMessages {
 
 
-    public void showGoodMessage(Context context, String title, String message) {
+    public static void showGoodMessage(Context context, String title, String message) {
 /*
         Toast.makeText(context,
                 "Bien jouer", Toast.LENGTH_LONG).show();
@@ -29,7 +29,7 @@ public class ModalMessages {
                 .show();
     }
 
-    public void showWrongMessage(Context context, String title, String message) {
+    public static void showWrongMessage(Context context, String title, String message) {
         new AlertDialog.Builder(context)
                 .setTitle(title)
                 .setMessage(message)

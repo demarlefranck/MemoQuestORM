@@ -18,8 +18,6 @@ public class UserDao {
 
     public User getUserActive() {
 
-        User user = null;
-
         List<User> users = new Select().from(User.class)
                                         .where("Active = ?", 1)
                                         .execute();
@@ -28,9 +26,8 @@ public class UserDao {
             throw new RuntimeException("Any User Active");
         }
         else if(users.size() == 1){
-            user = users.get(0);
+            return users.get(0);
         }
-
-        return user;
+        return null;
     }
 }
