@@ -34,26 +34,16 @@ public class Game1Activity extends ActionBarActivity implements View.OnClickList
         setContentView(R.layout.activity_game1);
 
         quizContentService = new QuizContentService();
-/*
+
         long quizContentId = getObjetbunbleValue();
 
         if(quizContentId != -1){
 
             quizContent = quizContentService.findUniqueById(quizContentId);
-
-
-
-            Log.d("DDDDDDDDDDEEEEEEEEEBBBBBBBBUUUUUUUUUUGGGGGGGGG", "quizContentId:  " + quizContentId);
-
-
-            Log.d("DDDDDDDDDDEEEEEEEEEBBBBBBBBUUUUUUUUUUGGGGGGGGG", quizContent.toString());
         }
         else{
             ModalMessages.showWrongMessage(this, "Probleme Technique", this.getClass().getSimpleName() + "onCreate(): " + "Probleme d'identification de ObjetbunbleValue  :  getObjetbunbleValue() = -1");
         }
-*/
-
-        showView();
 
     }
 
@@ -69,48 +59,13 @@ public class Game1Activity extends ActionBarActivity implements View.OnClickList
 
         } else{
             ModalMessages.showWrongMessage(this, "Probleme Technique", this.getClass().getSimpleName() + "onCreate(): " + "Probleme d'identification de ObjetbunbleValue");
-
         }
         return objetbunbleValue;
     }
 
-
-
-/*
     @Override
     protected void onStart() {
         super.onStart();
-*/
-    private void showView() {
-
-
-
-
-        long quizContentId = getObjetbunbleValue();
-
-        if(quizContentId != -1){
-
-            quizContent = quizContentService.findUniqueById(quizContentId);
-
-
-
-            Log.d("DDDDDDDDDDEEEEEEEEEBBBBBBBBUUUUUUUUUUGGGGGGGGG", "quizContentId:  " + quizContentId);
-
-
-            Log.d("DDDDDDDDDDEEEEEEEEEBBBBBBBBUUUUUUUUUUGGGGGGGGG", quizContent.toString());
-        }
-        else{
-            ModalMessages.showWrongMessage(this, "Probleme Technique", this.getClass().getSimpleName() + "onCreate(): " + "Probleme d'identification de ObjetbunbleValue  :  getObjetbunbleValue() = -1");
-        }
-
-
-
-
-
-
-
-        Log.d("DDDDDDDDDDEEEEEEEEEBBBBBBBBUUUUUUUUUUGGGGGGGGG", quizContent.toString());
-
 
         TextView textViewQuestion = (TextView) findViewById(R.id.textViewQuestion);
         if(quizContent.getQuestion() != null){
