@@ -1,4 +1,4 @@
-package com.memoquest.model.db;
+package com.temp.model;
 
 import com.activeandroid.Model;
 import com.activeandroid.annotation.Column;
@@ -8,24 +8,24 @@ import java.util.Date;
 
 /**
  * Created by franck on 30/10/2014.
+ *
+ * `ROW_ID`, `NAME`, `CREATED`, `CREATED_BY`, `UPDATED`, `UPDATED_BY`, `SKILL_ID`
+ *
+ *
  */
-@Table(name = "MQ_SKILL")
-public class Skill  extends Model {
+@Table(name = "SERVER_MQ_QUIZ")
+public class ServerQuiz extends Model {
+
 
     @Column(name = "ROW_ID")
     private Integer serverId;
 
-    @Column(name = "GRADE")
-    private String grade;
+    @Column(name = "NAME")
+    private String name;
 
-    @Column(name = "SUBJECT")
-    private String subject;
+    @Column(name = "SKILL_ID", onDelete = Column.ForeignKeyAction.CASCADE)
+    private ServerSkill skill;
 
-    @Column(name = "CATEGORY")
-    private String category;
-
-    @Column(name = "SKILL")
-    private String skill;
 
     @Column(name = "CREATED_BY")
     //  public int createUser;
@@ -41,7 +41,7 @@ public class Skill  extends Model {
     @Column(name = "UPDATED")
     private Date updateTime;
 
-   public Integer getServerId() {
+    public Integer getServerId() {
         return serverId;
     }
 
@@ -49,36 +49,12 @@ public class Skill  extends Model {
         this.serverId = serverId;
     }
 
-    public String getGrade() {
-        return grade;
+    public String getName() {
+        return name;
     }
 
-    public void setGrade(String grade) {
-        this.grade = grade;
-    }
-
-    public String getSubject() {
-        return subject;
-    }
-
-    public void setSubject(String subject) {
-        this.subject = subject;
-    }
-
-    public String getCategory() {
-        return category;
-    }
-
-    public void setCategory(String category) {
-        this.category = category;
-    }
-
-    public String getSkill() {
-        return skill;
-    }
-
-    public void setSkill(String skill) {
-        this.skill = skill;
+    public void setName(String name) {
+        this.name = name;
     }
 
     public Long getCreateUser() {
@@ -113,14 +89,20 @@ public class Skill  extends Model {
         this.updateTime = updateTime;
     }
 
+
+    /*
+    public List<QuizContent> getQuizContents() {
+
+        return getMany(QuizContent.class, "QUIZ_FK");
+    }
+*/
+
     @Override
     public String toString() {
-        return "Skill{" +
-             //   "serverId=" + serverId +
-                ", grade='" + grade + '\'' +
-                ", subject='" + subject + '\'' +
-                ", category='" + category + '\'' +
-                ", skill='" + skill + '\'' +
+        return "Quiz{" +
+                "name='" + name + '\'' +
+                //      ", skill=" + skill +
+                //  ", quizContents=" + getQuizContents().toString() +
                 ", createUser=" + createUser +
                 ", createTime=" + createTime +
                 ", updateUser=" + updateUser +

@@ -21,10 +21,9 @@ public class Quiz extends Model {
 
     @Column(name = "NAME")
     private String name;
-/*
+
     @Column(name = "SKILL_ID", onDelete = Column.ForeignKeyAction.CASCADE)
     private Skill skill;
-*/
 
     @Column(name = "CREATED_BY")
     //  public int createUser;
@@ -88,8 +87,15 @@ public class Quiz extends Model {
         this.updateTime = updateTime;
     }
 
+    public Skill getSkill() {
+        return skill;
+    }
 
-    /*
+    public void setSkill(Skill skill) {
+        this.skill = skill;
+    }
+
+/*
     public List<QuizContent> getQuizContents() {
 
         return getMany(QuizContent.class, "QUIZ_FK");

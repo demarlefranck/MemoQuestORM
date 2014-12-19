@@ -50,7 +50,7 @@ public class GlobalQuizActivity extends ActionBarActivity {
             ModalMessages.showWrongMessage(this, "Probleme Technique", this.getClass().getSimpleName() + "onCreate(): " + "Probleme d'identification de ObjetbunbleValue  :  getObjetbunbleValue() = -1");
         }
 
-
+/*
         voir comment faire pour lancer le game avec une attente de resultat
 
                 le resultat serait le nombre de tentatives avant d'avoir trouve le bon resultat
@@ -60,6 +60,9 @@ public class GlobalQuizActivity extends ActionBarActivity {
         Il faut egalement que cette classe chrnometre le temps passe sur ce quizId
 
                 en vue de stocker tout ca dans score
+*/
+
+
 
 
 

@@ -6,6 +6,13 @@ import android.net.NetworkInfo;
 
 public class ConnexionDao {
 
+
+    /*
+    a revoir car si l'on coupe le rseau cellulaire et que le wifi est allume
+
+    c'est considere comme sans connexion internet
+     */
+
     public Boolean checkInternetConenction(Context context){
 
         ConnectivityManager check = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);

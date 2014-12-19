@@ -7,16 +7,26 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 
+import com.activeandroid.query.Select;
 import com.memoquest.app.R;
 import com.memoquest.app.modal.ModalMessages;
 import com.memoquest.model.db.Quiz;
 import com.memoquest.model.db.QuizContent;
+import com.memoquest.model.db.Skill;
 import com.memoquest.model.db.User;
 import com.memoquest.service.ConnexionService;
 import com.memoquest.service.entity.QuizContentService;
 import com.memoquest.service.entity.QuizService;
 import com.memoquest.service.entity.UserService;
+import com.memoquest.service.rest.QuizContentRestService;
+import com.memoquest.service.rest.QuizRestService;
+import com.memoquest.service.rest.SkillRestService;
 import com.memoquest.service.synchro.ManagerSynchroService;
+import com.temp.bdd.BddManager;
+import com.temp.model.ServerQuiz;
+import com.temp.model.ServerQuizContent;
+import com.temp.model.ServerSkill;
+import com.temp.reader.JsonReader;
 import com.test.memoquest.model.QuizContentTest;
 import com.test.memoquest.model.QuizTest;
 
@@ -49,14 +59,22 @@ public class MainActivity extends ActionBarActivity {
         /*
             section pour les tests
          */
-       // test();
+       // ServerQuizContent.txt();
+
+       // testInsert();
+
+        testRestFake();
+
+
+
+        /*
+
 
         QuizService quizService = new QuizService();
-
         if(quizService.getAll().size() == 0){
             insertSampleData();
         }
-        /*
+
             fin de section pour les tests
          */
 
@@ -68,7 +86,7 @@ public class MainActivity extends ActionBarActivity {
 
         /*
             Version OK
-        */
+
         if(connexionService.isConnected(this)){
 
             startWithConnection();
@@ -77,7 +95,41 @@ public class MainActivity extends ActionBarActivity {
 
             startWithoutConnection();
         }
+*/
 
+    }
+
+
+    private void testRestFake() {
+        SkillRestService skillRestService = new SkillRestService();
+        QuizRestService quizRestService = new QuizRestService();
+        QuizContentRestService quizContentRestService = new QuizContentRestService();
+
+        for (Skill skill : skillRestService.getServerSkills()){
+            Log.d("getServerSkills:  ", skill.toString());
+        }
+        for (Quiz quiz : quizRestService.getQuizs()){
+            Log.d("getQuizs:  ", quiz.toString());
+        }
+        for (QuizContent quizContent : quizContentRestService.getQuizContents()){
+            Log.d("getQuizContents:  ", quizContent.toString());
+        }
+
+
+    }
+
+
+
+    private void testInsert() {
+
+
+        JsonReader jsonReader = new JsonReader();
+        BddManager bddManager = new BddManager();
+        bddManager.initBddTemp();
+
+        Log.d("DEBUBQuizGetAll", new Select().from(ServerQuizContent.class).execute().toString());
+        Log.d("DEBUBQuizGetAll", new Select().from(ServerQuiz.class).execute().toString());
+        Log.d("DEBUBQuizGetAll", new Select().from(ServerSkill.class).execute().toString());
 
     }
 
@@ -193,6 +245,10 @@ public class MainActivity extends ActionBarActivity {
     }
 
 
+
+    
+    
+    
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
 

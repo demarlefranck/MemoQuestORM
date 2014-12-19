@@ -1,4 +1,4 @@
-package com.memoquest.model.db;
+package com.temp.model;
 
 import com.activeandroid.Model;
 import com.activeandroid.annotation.Column;
@@ -8,9 +8,13 @@ import java.util.Date;
 
 /**
  * Created by franck on 30/10/2014.
+ *
+ *
+ *  INSERT INTO `SERVER_MQ_SKILL` (`ROW_ID`, `GRADE`, `SUBJECT`, `CATEGORY`, `SKILL`, `CREATED`, `CREATED_BY`, `UPDATED`, `UPDATED_BY`) VALUES
+ *
  */
-@Table(name = "MQ_SKILL")
-public class Skill  extends Model {
+@Table(name = "SERVER_MQ_SKILL")
+public class ServerSkill  extends Model {
 
     @Column(name = "ROW_ID")
     private Integer serverId;
@@ -41,7 +45,7 @@ public class Skill  extends Model {
     @Column(name = "UPDATED")
     private Date updateTime;
 
-   public Integer getServerId() {
+    public Integer getServerId() {
         return serverId;
     }
 
@@ -116,7 +120,7 @@ public class Skill  extends Model {
     @Override
     public String toString() {
         return "Skill{" +
-             //   "serverId=" + serverId +
+                "serverId=" + serverId +
                 ", grade='" + grade + '\'' +
                 ", subject='" + subject + '\'' +
                 ", category='" + category + '\'' +
