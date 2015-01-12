@@ -1,4 +1,4 @@
-package com.memoquest.dao.rest;
+package com.memoquest.dao.rest.get;
 
 import android.os.AsyncTask;
 import android.util.Log;
@@ -24,10 +24,9 @@ import java.util.List;
 
 import static java.lang.Integer.parseInt;
 
-public class RestGetQuizDao extends AsyncTask<Void, Void, List<Quiz> > {
+public class RestGetAllQuizDao extends AsyncTask<Void, Void, List<Quiz> > {
 
     private int userId;
-
     public void setUserId(int id) {
         this.userId = id;
     }
@@ -48,9 +47,6 @@ public class RestGetQuizDao extends AsyncTask<Void, Void, List<Quiz> > {
             if (statusCode == 200) {
 
                 quizs = httpEntityToObject(httpResponse.getEntity());
-
-
-                Log.e("INFO", "statusCode:  "  + String.valueOf(statusCode));
 
             } else {
                // new TechnicalAppException("RestGetListesDaoTest.class: Probleme lors de la recuperation des listes");
@@ -81,13 +77,8 @@ public class RestGetQuizDao extends AsyncTask<Void, Void, List<Quiz> > {
         } catch (IOException e) {
             e.toString();
         }
-
-
-
        return stringToQuizs(builder.toString());
-
     }
-
 
     public List<Quiz> stringToQuizs(String string){
 
@@ -97,9 +88,6 @@ public class RestGetQuizDao extends AsyncTask<Void, Void, List<Quiz> > {
         try {
             JSONArray listesJson = new JSONArray(string);
             Quiz quiz;
-
-
-
 
             for (int i = 0; i < listesJson.length(); i++) {
 
