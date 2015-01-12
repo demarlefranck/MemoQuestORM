@@ -1,6 +1,6 @@
 package com.memoquest.service.rest;
 
-import com.memoquest.dao.rest.QuizRestDao;
+import com.memoquest.dao.rest.QuizRestDaoOLD;
 import com.memoquest.model.db.Quiz;
 import com.memoquest.model.db.Skill;
 
@@ -11,10 +11,10 @@ import java.util.List;
  */
 public class QuizRestService {
 
-    private QuizRestDao quizRestDao;
+    private QuizRestDaoOLD quizRestDao;
 
     public QuizRestService(){
-        quizRestDao = new QuizRestDao();
+        quizRestDao = new QuizRestDaoOLD();
     }
 
     public List<Quiz> getQuizs(){

@@ -17,10 +17,8 @@ import java.util.List;
 
 import static java.lang.Integer.parseInt;
 
-/**
- * Created by franck on 19/12/14.
- */
-public class QuizRestDao {
+
+public class QuizRestDaoOLD {
 
     public List<Quiz> getQuizsBySkill(Skill skill) {
 
@@ -41,6 +39,10 @@ public class QuizRestDao {
         //remplacer cette recuperation par le service REST
         JsonContener jsonContener = new JsonContener();
         String quizsJsonString = jsonContener.getQuizJsonString();
+
+
+
+
 
         return jsonToQuizs(quizsJsonString);
     }

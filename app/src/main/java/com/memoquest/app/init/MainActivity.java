@@ -10,6 +10,7 @@ import android.view.MenuItem;
 import com.activeandroid.query.Select;
 import com.memoquest.app.R;
 import com.memoquest.app.modal.ModalMessages;
+import com.memoquest.dao.rest.RestGetQuizDao;
 import com.memoquest.model.db.Quiz;
 import com.memoquest.model.db.QuizContent;
 import com.memoquest.model.db.Skill;
@@ -29,6 +30,8 @@ import com.temp.model.ServerSkill;
 import com.temp.reader.JsonReader;
 import com.test.memoquest.model.QuizContentTest;
 import com.test.memoquest.model.QuizTest;
+
+import java.util.concurrent.ExecutionException;
 
 public class MainActivity extends ActionBarActivity {
 
@@ -63,12 +66,16 @@ public class MainActivity extends ActionBarActivity {
 
        // testInsert();
 
-        testRestFake();
 
 
 
-        /*
 
+     //   testRestFake();
+
+        testRestServer();
+
+
+/*
 
         QuizService quizService = new QuizService();
         if(quizService.getAll().size() == 0){
@@ -95,9 +102,43 @@ public class MainActivity extends ActionBarActivity {
 
             startWithoutConnection();
         }
-*/
+        */
 
     }
+
+
+
+
+
+    private void testRestServer() {
+
+        RestGetQuizDao restGetQuizDao = new RestGetQuizDao();
+        restGetQuizDao.execute();
+
+        try {
+            Log.e("INFO", "testRestServer OK");
+            restGetQuizDao.get();
+
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        } catch (ExecutionException e) {
+            e.printStackTrace();
+        }
+
+
+
+
+
+
+    }
+
+
+
+
+
+
+
+
 
 
     private void testRestFake() {
@@ -121,6 +162,7 @@ public class MainActivity extends ActionBarActivity {
 
 
     private void testInsert() {
+
 
 
         JsonReader jsonReader = new JsonReader();
