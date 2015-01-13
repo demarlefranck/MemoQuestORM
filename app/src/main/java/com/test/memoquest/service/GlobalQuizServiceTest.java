@@ -11,6 +11,7 @@ import com.memoquest.model.db.User;
 import com.memoquest.service.GlobalQuizService;
 import com.memoquest.service.entity.QuizContentService;
 import com.memoquest.service.entity.QuizService;
+import com.memoquest.service.entity.UserService;
 import com.test.memoquest.model.QuizContentTest;
 import com.test.memoquest.model.QuizTest;
 
@@ -20,11 +21,13 @@ import java.util.List;
 /**
  * Created by franck on 31/10/2014.
  */
-public class BuisnessLayerTest extends AndroidTestCase {
+public class GlobalQuizServiceTest extends AndroidTestCase {
 
     private GlobalQuizService globalQuizService;
 
     private QuizService quizService;
+    private UserServiceTest userServiceTest;
+    private UserService userService;
     private QuizContentService quizContentService;
     private QuizServiceTest quizServiceTest;
     private QuizContentServiceTest quizContentServiceTest;
@@ -37,6 +40,8 @@ public class BuisnessLayerTest extends AndroidTestCase {
         quizContentService = new QuizContentService();
 
         globalQuizService = new GlobalQuizService();
+        userServiceTest = new UserServiceTest();
+        userService = new UserService();
         quizServiceTest = new QuizServiceTest();
         quizContentServiceTest = new QuizContentServiceTest();
         quizContentTest = new QuizContentTest();
@@ -47,6 +52,7 @@ public class BuisnessLayerTest extends AndroidTestCase {
 
         quizContentServiceTest.testDeleteAll();
         quizServiceTest.testDeleteAll();
+        userServiceTest.testDeleteAll();
     }
 
     public void testEditOneGlobalQuizWithOneQuizContentOK() {
@@ -54,6 +60,7 @@ public class BuisnessLayerTest extends AndroidTestCase {
         /*
                check db is empty
          */
+        assertEquals(0, userService.getAll().size());
         assertEquals(0, quizService.getAll().size());
         assertEquals(0, quizContentService.getAll().size());
 
@@ -83,6 +90,7 @@ public class BuisnessLayerTest extends AndroidTestCase {
         /*
                check db is empty
          */
+        assertEquals(0, userService.getAll().size());
         assertEquals(0, quizService.getAll().size());
         assertEquals(0, quizContentService.getAll().size());
 
@@ -144,7 +152,7 @@ public class BuisnessLayerTest extends AndroidTestCase {
         assertEquals(1, quizService.getAll().size());
         assertEquals(1, quizContentService.getAll().size());
 
-        Quiz quiz2 = quizTest.createOneQuiz(1);
+        Quiz quiz2 = quizTest.createOneQuiz(2);
 
         QuizContent quizContent2 = quizContentTest.createOneQuizContent(2, quiz2);
         QuizContent quizContent3 = quizContentTest.createOneQuizContent(3, quiz2);

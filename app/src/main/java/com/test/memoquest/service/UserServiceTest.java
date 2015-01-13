@@ -96,7 +96,4 @@ public class UserServiceTest extends AndroidTestCase {
         testDeleteAll();
         assertEquals(0, userService.getAll().size());
     }
-
-
-
 }

@@ -56,7 +56,7 @@ public class QuizServiceTest extends AndroidTestCase {
     }
 
     /*
-        Methode utilisee dans BuisnessLayerTest
+        Methode utilisee dans GlobalQuizServiceTest
      */
     public void testDeleteAll() {
         QuizService quizServiceTemp = new QuizService();

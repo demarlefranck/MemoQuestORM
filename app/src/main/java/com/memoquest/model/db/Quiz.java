@@ -114,4 +114,40 @@ public class Quiz extends Model {
                 ", updateTime=" + updateTime +
                 '}';
     }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        if (!super.equals(o)) return false;
+
+        Quiz quiz = (Quiz) o;
+
+        if (createTime != null ? !createTime.equals(quiz.createTime) : quiz.createTime != null)
+            return false;
+        if (createUser != null ? !createUser.equals(quiz.createUser) : quiz.createUser != null)
+            return false;
+        if (name != null ? !name.equals(quiz.name) : quiz.name != null) return false;
+        if (serverId != null ? !serverId.equals(quiz.serverId) : quiz.serverId != null)
+            return false;
+        if (skill != null ? !skill.equals(quiz.skill) : quiz.skill != null) return false;
+        if (updateTime != null ? !updateTime.equals(quiz.updateTime) : quiz.updateTime != null)
+            return false;
+        if (updateUser != null ? !updateUser.equals(quiz.updateUser) : quiz.updateUser != null)
+            return false;
+
+        return true;
+    }
+
+    @Override
+    public int hashCode() {
+        int result = serverId != null ? serverId.hashCode() : 0;
+        result = 31 * result + (name != null ? name.hashCode() : 0);
+        result = 31 * result + (skill != null ? skill.hashCode() : 0);
+        result = 31 * result + (createUser != null ? createUser.hashCode() : 0);
+        result = 31 * result + (createTime != null ? createTime.hashCode() : 0);
+        result = 31 * result + (updateUser != null ? updateUser.hashCode() : 0);
+        result = 31 * result + (updateTime != null ? updateTime.hashCode() : 0);
+        return result;
+    }
 }

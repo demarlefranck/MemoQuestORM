@@ -43,6 +43,7 @@ public class QuizContentServiceTest extends AndroidTestCase {
         Quiz quiz = quizTest.createOneQuiz(1);
 
         QuizContent quizContent1 = quizContentTest.createOneQuizContent(1, quiz);
+
         quizContentService.edit(quizContent1, (long) 1);
 
         assertEquals(1, quizContentService.getAll().size());
@@ -65,7 +66,7 @@ public class QuizContentServiceTest extends AndroidTestCase {
     }
 
     /*
-        Methode utilisee dans BuisnessLayerTest
+        Methode utilisee dans GlobalQuizServiceTest
      */
     public void testDeleteAll() {
         QuizContentService quizContentServiceTemp = new QuizContentService();
