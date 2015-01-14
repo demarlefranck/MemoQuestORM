@@ -25,6 +25,9 @@ public class GlobalQuizService {
         quizService = new QuizService();
     }
 
+
+
+
     public void editGlobalQuiz(GlobalQuiz globalQuiz) {
 
         ActiveAndroid.beginTransaction();

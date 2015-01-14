@@ -18,9 +18,12 @@ public class QuizRestService {
     }
 
     public List<Quiz> getAllQuizsServer(){
-        restGetAllQuizDao.execute();
+
         try {
+
+            restGetAllQuizDao.execute();
             return restGetAllQuizDao.get();
+
         } catch (InterruptedException e) {
             throw new RuntimeException("Poblème de connexion au serveur");
 

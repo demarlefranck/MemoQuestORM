@@ -11,15 +11,12 @@ import com.memoquest.app.R;
 import com.memoquest.app.modal.ModalMessages;
 import com.memoquest.model.db.Quiz;
 import com.memoquest.model.db.QuizContent;
-import com.memoquest.model.db.Skill;
 import com.memoquest.model.db.User;
 import com.memoquest.service.ConnexionService;
 import com.memoquest.service.entity.QuizContentService;
 import com.memoquest.service.entity.QuizService;
 import com.memoquest.service.entity.UserService;
 import com.memoquest.service.rest.QuizContentRestService;
-import com.memoquest.service.rest.QuizRestService;
-import com.memoquest.service.rest.SkillRestService;
 import com.memoquest.service.synchro.ManagerSynchroService;
 import com.test.memoquest.model.QuizContentTest;
 import com.test.memoquest.model.QuizTest;
@@ -103,8 +100,12 @@ public class MainActivity extends ActionBarActivity {
 
     private void testRestServer() {
 
-        QuizRestService quizRestService = new QuizRestService();
-        quizRestService.getAllQuizsServer();
+        QuizContentRestService quizContentRestService = new QuizContentRestService();
+
+        Quiz quiz = new Quiz();
+        quiz.setServerId(1);
+
+         quizContentRestService.getQuizContentsByQuiz(quiz).size();
     }
 
 
@@ -115,7 +116,7 @@ public class MainActivity extends ActionBarActivity {
 
 
 
-
+/*
     private void testRestFake() {
         SkillRestService skillRestService = new SkillRestService();
         QuizRestService quizRestService = new QuizRestService();
@@ -133,7 +134,7 @@ public class MainActivity extends ActionBarActivity {
 
 
     }
-
+*/
 
 
     private void testInsert() {
