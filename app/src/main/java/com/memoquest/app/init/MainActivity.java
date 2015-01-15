@@ -49,31 +49,27 @@ public class MainActivity extends ActionBarActivity {
 
         /*
             section pour les tests
-         */
+
        // ServerQuizContent.txt();
 
        // testInsert();
 
+//        testRestServer();
 
 
 
-
-     //   testRestFake();
-
-        testRestServer();
-
-
-/*
 
         QuizService quizService = new QuizService();
         if(quizService.getAll().size() == 0){
             insertSampleData();
         }
 
-            fin de section pour les tests
-         */
+          fin de section pour les tests
 
-
+ */
+        if(userService.getAll().size() == 0){
+            insertSampleDataUser();
+        }
 
 
 
@@ -82,6 +78,7 @@ public class MainActivity extends ActionBarActivity {
         /*
             Version OK
 
+        */
         if(connexionService.isConnected(this)){
 
             startWithConnection();
@@ -90,7 +87,6 @@ public class MainActivity extends ActionBarActivity {
 
             startWithoutConnection();
         }
-        */
 
     }
 
@@ -151,31 +147,29 @@ public class MainActivity extends ActionBarActivity {
 */
     }
 
-    private void insertSampleData() {
+    private void insertSampleDataUser() {
 
         User user1 = connexionService.isAuthentifiate("demarl_f", "eip");
         userService.edit(user1, (long) -1);
-        userService.editUserToActive(user1);
 
         User user2 = connexionService.isAuthentifiate("dupe_j", "eip");
         userService.edit(user2, (long) -1);
-        userService.editUserToActive(user2);
 
         User user3 = connexionService.isAuthentifiate("chave_k", "eip");
         userService.edit(user3, (long) -1);
-        userService.editUserToActive(user3);
 
         User user4 = connexionService.isAuthentifiate("fourni_c", "eip");
         userService.edit(user4, (long) -1);
-        userService.editUserToActive(user4);
 
         User user5 = connexionService.isAuthentifiate("grosje_s", "eip");
         userService.edit(user5, (long) -1);
-        userService.editUserToActive(user5);
 
         User user6 = connexionService.isAuthentifiate("devill_b", "eip");
         userService.edit(user6, (long) -1);
-        userService.editUserToActive(user6);
+
+
+    }
+    private void insertSampleDataQuiz() {
 
         QuizService quizService = new QuizService();
         QuizContentService quizContentService = new QuizContentService();
@@ -201,9 +195,6 @@ public class MainActivity extends ActionBarActivity {
 
             }
         }
-
-
-
     }
 
     private void test() {

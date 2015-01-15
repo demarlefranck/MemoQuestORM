@@ -20,7 +20,6 @@ public class QuizContentRestService {
 
     public List<QuizContent> getQuizContentsByQuiz(Quiz quiz){
 
-
         try {
 
             restGetAllQuizContentDao.setQuizId(quiz.getServerId());

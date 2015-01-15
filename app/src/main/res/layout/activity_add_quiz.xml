@@ -6,7 +6,7 @@
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
     android:paddingBottom="@dimen/activity_vertical_margin"
-    tools:context="com.memoquest.app.game.QuizChoiceActivity">
+    tools:context="com.memoquest.app.game.addquiz.AddQuizActivity">
 
 
     <LinearLayout
@@ -91,9 +91,9 @@
                             <ImageView
                                 android:layout_width="fill_parent"
                                 android:layout_height="fill_parent"
-                                android:id="@+id/imageViewQuizGo"
+                                android:id="@+id/imageViewSearchByName"
                                 android:onClick="onClick"
-                                android:background="@drawable/quiz_go" />
+                                android:background="@drawable/search_by_name" />
                         </RelativeLayout>
 
                         <RelativeLayout
@@ -106,9 +106,9 @@
                             <ImageView
                                 android:layout_width="fill_parent"
                                 android:layout_height="match_parent"
-                                android:id="@+id/imageViewAddQuiz"
+                                android:id="@+id/imageViewSearchBySkill"
                                 android:onClick="onClick"
-                                android:background="@drawable/add_quiz" />
+                                android:background="@drawable/search_by_skill" />
                         </RelativeLayout>
                     </LinearLayout>
 
@@ -117,37 +117,37 @@
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:layout_weight="50">
-<!--
-                        <RelativeLayout
-                            android:layout_width="fill_parent"
-                            android:layout_height="fill_parent"
-                            android:layout_weight="50"
-                            android:layout_margin="10dp">
+                        <!--
+                                                <RelativeLayout
+                                                    android:layout_width="fill_parent"
+                                                    android:layout_height="fill_parent"
+                                                    android:layout_weight="50"
+                                                    android:layout_margin="10dp">
 
-                            <ImageView
-                                android:layout_width="match_parent"
-                                android:layout_height="match_parent"
-                                android:id="@+id/imageViewParameters"
-                                android:onClick="onClick"
-                                android:background="@drawable/parameters" />
+                                                    <ImageView
+                                                        android:layout_width="match_parent"
+                                                        android:layout_height="match_parent"
+                                                        android:id="@+id/imageViewParameters"
+                                                        android:onClick="onClick"
+                                                        android:background="@drawable/parameters" />
 
-                        </RelativeLayout>
+                                                </RelativeLayout>
 
-                        <RelativeLayout
-                            android:layout_width="fill_parent"
-                            android:layout_height="fill_parent"
-                            android:layout_weight="50"
-                            android:id="@+id/relativeLayout3"
-                            android:layout_margin="10dp">
+                                                <RelativeLayout
+                                                    android:layout_width="fill_parent"
+                                                    android:layout_height="fill_parent"
+                                                    android:layout_weight="50"
+                                                    android:id="@+id/relativeLayout3"
+                                                    android:layout_margin="10dp">
 
-                            <ImageView
-                                android:layout_width="match_parent"
-                                android:layout_height="match_parent"
-                                android:id="@+id/imageViewLogout"
-                                android:onClick="onClick"
-                                android:background="@drawable/logout" />
-                        </RelativeLayout>
--->
+                                                    <ImageView
+                                                        android:layout_width="match_parent"
+                                                        android:layout_height="match_parent"
+                                                        android:id="@+id/imageViewLogout"
+                                                        android:onClick="onClick"
+                                                        android:background="@drawable/logout" />
+                                                </RelativeLayout>
+                        -->
                     </LinearLayout>
 
                 </LinearLayout>

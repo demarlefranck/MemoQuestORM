@@ -30,4 +30,19 @@ public class QuizDao {
         }
         return null;
     }
+
+    public Quiz findUniqueByServeurId(Integer serverId) {
+
+        List<Quiz> quizs = new Select() .from(Quiz.class)
+                .where("ROW_ID = ?", serverId)
+                .execute();
+
+        if(quizs.size() > 1){
+            throw new RuntimeException("Any quiz in findUniqueByServeurId()");
+        }
+        else if(quizs.size() == 1){
+            return quizs.get(0);
+        }
+        return null;
+    }
 }

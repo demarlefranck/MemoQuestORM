@@ -12,5 +12,9 @@
     <string name="title_activity_switch_user">SwitchUserActivity</string>
     <string name="title_activity_game_choice">GameChoiceActivity</string>
     <string name="title_activity_global_quiz">GlobalQuizActivity</string>
+    <string name="title_activity_add_quiz">AddQuizActivity</string>
+    <string name="title_activity_search_by_name">SearchByNameActivity</string>
+    <string name="title_activity_global_quiz_game">GlobalQuizGameActivity</string>
+    <string name="title_activity_search_for_game_quiz">SearchForGameQuizActivityActivity</string>
 
 </resources>

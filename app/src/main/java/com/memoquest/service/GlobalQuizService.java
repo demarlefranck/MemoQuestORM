@@ -1,9 +1,12 @@
 package com.memoquest.service;
 
+import android.util.Log;
+
 import com.activeandroid.ActiveAndroid;
 import com.memoquest.model.GlobalQuiz;
 import com.memoquest.model.db.Quiz;
 import com.memoquest.model.db.QuizContent;
+import com.memoquest.model.db.User;
 import com.memoquest.service.entity.QuizContentService;
 import com.memoquest.service.entity.QuizService;
 import com.memoquest.service.entity.UserService;
@@ -19,6 +22,8 @@ public class GlobalQuizService {
     private QuizContentService quizContentService;
     private QuizService quizService;
 
+
+
     public GlobalQuizService() {
         userService = new UserService();
         quizContentService = new QuizContentService();
@@ -33,10 +38,16 @@ public class GlobalQuizService {
         ActiveAndroid.beginTransaction();
 
         try {
-            quizService.edit(globalQuiz.getQuiz(), userService.getUserActive().getId());
+            User user = userService.getUserActive();
+
+            Log.d("Debug", "Probleme, ne retrouve pas de user actif    user = null    dans editGlobalQuiz()   ");
+
+          //  quizService.edit(globalQuiz.getQuiz(), user.getId());
+            quizService.edit(globalQuiz.getQuiz(), (long) 1);
 
             for (QuizContent quizContent : globalQuiz.getQuizContents()) {
-                quizContentService.edit(quizContent, userService.getUserActive().getId());
+               // quizContentService.edit(quizContent, user.getId());
+                quizContentService.edit(quizContent, (long) 1);
             }
 
             ActiveAndroid.setTransactionSuccessful();

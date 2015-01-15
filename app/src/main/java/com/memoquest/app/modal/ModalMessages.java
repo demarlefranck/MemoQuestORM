@@ -1,5 +1,6 @@
 package com.memoquest.app.modal;
 
+import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -9,7 +10,7 @@ import com.memoquest.app.R;
 /**
  * Created by franck on 15/11/14.
  */
-public class ModalMessages {
+public class ModalMessages extends Activity {
 
 
     public static void showGoodMessage(Context context, String title, String message) {
@@ -20,7 +21,7 @@ public class ModalMessages {
         new AlertDialog.Builder(context)
                 .setTitle(title)
                 .setMessage(message)
-                .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
+                .setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int which) {
                         //close
                     }
@@ -33,7 +34,7 @@ public class ModalMessages {
         new AlertDialog.Builder(context)
                 .setTitle(title)
                 .setMessage(message)
-                .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
+                .setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int which) {
                         //close
                     }

@@ -33,6 +33,10 @@
             android:label="@string/title_activity_game1" >
         </activity>
         <activity
+            android:name="com.memoquest.app.game.GlobalQuizGameActivity"
+            android:label="@string/title_activity_game1" >
+        </activity>
+        <activity
             android:name="com.memoquest.app.init.MenuActivity"
             android:label="@string/title_activity_menu" >
         </activity>
@@ -49,8 +53,16 @@
             android:label="@string/title_activity_game_choice" >
         </activity>
         <activity
-            android:name="com.memoquest.app.game.GlobalQuizActivity"
-            android:label="@string/title_activity_global_quiz" >
+            android:name="com.memoquest.app.game.addquiz.AddQuizActivity"
+            android:label="@string/title_activity_add_quiz" >
+        </activity>
+        <activity
+            android:name="com.memoquest.app.game.addquiz.SearchForAddQuizActivity"
+            android:label="@string/title_activity_search_by_name" >
+        </activity>
+        <activity
+            android:name="com.memoquest.app.game.SearchForGameQuizActivity"
+            android:label="@string/title_activity_search_for_game_quiz" >
         </activity>
     </application>
 

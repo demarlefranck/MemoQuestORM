@@ -4,13 +4,14 @@ import com.activeandroid.Model;
 import com.activeandroid.annotation.Column;
 import com.activeandroid.annotation.Table;
 
+import java.io.Serializable;
 import java.util.Date;
 
 /**
  * Created by franck on 30/10/2014.
  */
 @Table(name = "MQ_QUIZ")
-public class Quiz extends Model {
+public class Quiz extends Model implements Serializable{
 
 
     // `ROW_ID`, `NAME`,  `SKILL_ID`

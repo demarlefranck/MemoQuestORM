@@ -41,4 +41,9 @@ public class QuizService {
     public Quiz findUniqueById(long quizId) {
         return quizDao.findUniqueById(quizId);
     }
+
+
+    public Quiz findUniqueByServeurId(Integer serverId) {
+        return quizDao.findUniqueByServeurId(serverId);
+    }
 }
