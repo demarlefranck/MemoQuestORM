@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
 import android.view.View;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.memoquest.app.R;
 import com.memoquest.app.modal.ModalMessages;
@@ -14,7 +15,7 @@ import com.memoquest.service.entity.QuizContentService;
 public class Game0Activity extends ActionBarActivity implements View.OnClickListener {
 
     private QuizContent quizContent;
-    private int attemptsNumber;
+    private int errorNumber;
     private QuizContentService quizContentService;
 
     @Override
@@ -23,7 +24,7 @@ public class Game0Activity extends ActionBarActivity implements View.OnClickList
         setContentView(R.layout.activity_game0);
 
         quizContentService = new QuizContentService();
-        attemptsNumber = 0;
+        errorNumber = 0;
 
         long quizContentId = getObjetbunbleValue();
 
@@ -100,17 +101,18 @@ public class Game0Activity extends ActionBarActivity implements View.OnClickList
         ModalMessages modalMessages = new ModalMessages();
 
         if(answerGamer.equals(quizContent.getSolution())){
-            modalMessages.showGoodMessage(this, "Bien jouer", "Bonne réponse");
+            Toast.makeText(getApplicationContext(), "Bonne réponse", Toast.LENGTH_LONG).show();
 
             Intent returnIntent = new Intent();
-            returnIntent.putExtra("attemptsNumber", attemptsNumber);
+            returnIntent.putExtra("errorNumber", errorNumber);
             setResult(RESULT_OK, returnIntent);
             finish();
 
         }
         else{
-            modalMessages.showWrongMessage(this, "Désolé", "Mauvaise réponse");
-            attemptsNumber++;
+            errorNumber++;
+            Toast.makeText(getApplicationContext(), "Mauvaise réponse", Toast.LENGTH_LONG).show();
+         //   Toast.makeText(getApplicationContext(), "errorNumber: " + errorNumber, Toast.LENGTH_LONG).show();
         }
     }
 }

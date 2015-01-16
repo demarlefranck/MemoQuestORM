@@ -68,6 +68,10 @@
             android:name="com.memoquest.app.game.Game0Activity"
             android:label="@string/title_activity_game0" >
         </activity>
+        <activity
+            android:name="com.memoquest.app.game.EndGlobalActivityActivity"
+            android:label="@string/title_activity_end_global" >
+        </activity>
     </application>
 
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />

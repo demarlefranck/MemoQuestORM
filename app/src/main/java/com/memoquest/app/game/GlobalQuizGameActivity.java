@@ -3,6 +3,7 @@ package com.memoquest.app.game;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.memoquest.app.R;
@@ -11,26 +12,27 @@ import com.memoquest.model.GlobalQuiz;
 import com.memoquest.model.db.Quiz;
 import com.memoquest.model.db.QuizContent;
 import com.memoquest.service.GlobalQuizService;
-import com.memoquest.service.Utils.ObjetbunbleGetter;
 import com.memoquest.service.entity.QuizService;
+
+import java.util.Date;
 
 public class GlobalQuizGameActivity extends ActionBarActivity {
 
-
     private static final int REQUEST_SEARCH_CODE = 10;
     private static final int REQUEST_QUIZ_CONTENT_CODE = 11;
+    private static final int REQUEST_GLOBAL_QUIZ_END_CODE = 11;
     private GlobalQuiz globalQuiz;
-    private ObjetbunbleGetter objetbunbleGetter;
+    private Date dateStart;
+    private Date dateStop;
+    private int errorNumber;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        objetbunbleGetter = new ObjetbunbleGetter();
+        errorNumber = 0;
         globalQuiz = null;
         searchQuizId();
-
-        setContentView(R.layout.activity_global_quiz_game);
     }
 
     private void searchQuizId() {
@@ -57,17 +59,30 @@ public class GlobalQuizGameActivity extends ActionBarActivity {
         else if (requestCode == REQUEST_QUIZ_CONTENT_CODE) {
 
             if(resultCode == RESULT_OK){
-                int attemptsNumber = data.getIntExtra("attemptsNumber", -1);
+                int errorNumberTemp = data.getIntExtra("errorNumber", -1);
 
-                if(attemptsNumber != -1){
-                     Toast.makeText(getApplicationContext(),"quizContent terminé avec nombre de tentative: " + attemptsNumber , Toast.LENGTH_LONG).show();
-                   // startGlobalQuizGame(quizId);
+//MARCHE PAS LA REPONSE MET TROP DE TEMPS A REVENIR
+
+
+            //    Toast.makeText(getApplicationContext(), "errorNumberTemp: " + errorNumberTemp, Toast.LENGTH_LONG).show();
+
+                if(errorNumberTemp != -1){
+                    errorNumber = errorNumber + errorNumberTemp;
                 }
                 else{
-                    Toast.makeText(getApplicationContext(),"probleme de recuperation de attemptsNumber, onActivityResult() GlobalQuizGameActivity.class " , Toast.LENGTH_LONG).show();
+                    Toast.makeText(getApplicationContext(),"probleme de recuperation de errorNumber, onActivityResult() GlobalQuizGameActivity.class " , Toast.LENGTH_LONG).show();
                 }
             }
         }
+        /*
+        else if (requestCode == REQUEST_GLOBAL_QUIZ_END_CODE) {
+
+            if(resultCode == RESULT_OK){
+
+              //  showResult();
+            }
+        }
+        */
     }
 
     private void startGlobalQuizGame(long quizId) {
@@ -79,12 +94,11 @@ public class GlobalQuizGameActivity extends ActionBarActivity {
         globalQuiz = globalQuizService.findGlobalQuiz(quiz);
 
         lunchAllQuizContentGame();
-
-        Toast.makeText(getApplicationContext(),"reprendre ici, startGlobalQuizGame(),GlobalQuizGameActivity.class  quizId : " + quizId , Toast.LENGTH_LONG).show();
-    }
+     }
 
     private void lunchAllQuizContentGame() {
 
+        dateStart = new Date();
         for(QuizContent quizContent : globalQuiz.getQuizContents()) {
 
             switch (quizContent.getQuestionType()) {
@@ -92,11 +106,6 @@ public class GlobalQuizGameActivity extends ActionBarActivity {
                     Intent intent0 = new Intent(this, Game0Activity.class);
                     intent0.putExtra("quizContentId", quizContent.getId());
                     startActivityForResult(intent0, REQUEST_QUIZ_CONTENT_CODE);
-
-
-                    int quizFilter = objetbunbleGetter.getIntObjetbunbleValue(this, this.getIntent(), "filter");
-
-
                 break;
 
                 case 1:
@@ -110,6 +119,54 @@ public class GlobalQuizGameActivity extends ActionBarActivity {
                 break;
             }
         }
+        dateStop = new Date();
+
+/*
+        Intent intent = new Intent(this, EndGlobalActivityActivity.class);
+        startActivityForResult(intent,REQUEST_GLOBAL_QUIZ_END_CODE);
+*/
+        showResult();
     }
 
+    private void showResult() {
+        setContentView(R.layout.activity_global_quiz_game);
+
+        TextView textViewErrorResult = (TextView) findViewById(R.id.textViewErrorResult);
+
+        //   String textErrorResult = "vous avez fait " + errorNumber + " erreur" + addS(errorNumber);
+        String textErrorResult = "";
+
+        textViewErrorResult.setText(textErrorResult);
+
+        TextView textViewTimeResult = (TextView) findViewById(R.id.textViewTimeResult);
+
+        long diff = (dateStop.getTime() - dateStart.getTime()) ;
+
+        int minutes = (int) (diff / 60);
+        int secondes = (int) (diff % 60);
+
+        String chrono = "chrono: ";
+        if(minutes > 0){
+            chrono += minutes + " minute" + addS(minutes) + " ";
+        }
+        if(secondes > 0){
+            chrono += secondes +" seconde" + addS(secondes);
+        }
+
+        textViewTimeResult.setText(chrono);
+
+    }
+
+    private String addS(int nb){
+
+        String result = null;
+
+        if(nb > 1){
+            result = "s";
+
+        }else{
+            result = "";
+        }
+        return result;
+    }
 }
