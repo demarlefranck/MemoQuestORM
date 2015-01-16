@@ -16,5 +16,6 @@
     <string name="title_activity_search_by_name">SearchByNameActivity</string>
     <string name="title_activity_global_quiz_game">GlobalQuizGameActivity</string>
     <string name="title_activity_search_for_game_quiz">SearchForGameQuizActivityActivity</string>
+    <string name="title_activity_game0">Game0Activity</string>
 
 </resources>

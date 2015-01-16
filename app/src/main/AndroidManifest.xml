@@ -64,6 +64,10 @@
             android:name="com.memoquest.app.game.SearchForGameQuizActivity"
             android:label="@string/title_activity_search_for_game_quiz" >
         </activity>
+        <activity
+            android:name="com.memoquest.app.game.Game0Activity"
+            android:label="@string/title_activity_game0" >
+        </activity>
     </application>
 
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
