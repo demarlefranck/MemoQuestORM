@@ -92,9 +92,8 @@
                             <ImageView
                                 android:layout_width="fill_parent"
                                 android:layout_height="fill_parent"
-                                android:id="@+id/imageViewQuiz"
-                                android:onClick="onClick"
-                                android:background="@drawable/quiz" />
+                                android:id="@+id/imageViewAnswerA"
+                                android:onClick="onClick" />
                         </RelativeLayout>
 
                         <RelativeLayout
@@ -107,9 +106,8 @@
                             <ImageView
                                 android:layout_width="fill_parent"
                                 android:layout_height="match_parent"
-                                android:id="@+id/imageViewScores"
-                                android:onClick="onClick"
-                                android:background="@drawable/scores" />
+                                android:id="@+id/imageViewAnswerB"
+                                android:onClick="onClick" />
                         </RelativeLayout>
                     </LinearLayout>
 
@@ -128,9 +126,8 @@
                             <ImageView
                                 android:layout_width="match_parent"
                                 android:layout_height="match_parent"
-                                android:id="@+id/imageViewParameters"
-                                android:onClick="onClick"
-                                android:background="@drawable/parameters" />
+                                android:id="@+id/imageViewAnswerC"
+                                android:onClick="onClick" />
 
                         </RelativeLayout>
 
@@ -144,9 +141,8 @@
                             <ImageView
                                 android:layout_width="match_parent"
                                 android:layout_height="match_parent"
-                                android:id="@+id/imageViewLogout"
-                                android:onClick="onClick"
-                                android:background="@drawable/logout" />
+                                android:id="@+id/imageViewAnswerD"
+                                android:onClick="onClick" />
                         </RelativeLayout>
 
                     </LinearLayout>
@@ -160,3 +156,58 @@
     </LinearLayout>
 
 </RelativeLayout>
+
+
+
+    <!--
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/imageButtonAnswerA"
+            android:layout_column="0"
+            android:baselineAlignBottom="false" />
+
+        <ImageView
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:id="@+id/imageButtonAnswerB"
+            android:layout_column="1"
+            android:layout_gravity="right" />
+
+
+
+        <ImageView
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:id="@+id/imageButtonAnswerC"
+            android:layout_column="0"
+            android:layout_gravity="left" />
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/imageButtonAnswerD"
+            android:layout_column="1"
+            android:layout_gravity="right" />
+
+
+                        -->
+
+
+
+
+
+
+
+
+    <!--
+            <ImageView
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:id="@+id/imageView"
+                android:layout_centerVertical="true"
+                android:layout_alignParentRight="true"
+                android:layout_alignParentEnd="true" />
+        -->
+

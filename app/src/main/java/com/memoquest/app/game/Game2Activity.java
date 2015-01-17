@@ -4,7 +4,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
 import android.view.View;
-import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -13,24 +12,16 @@ import com.memoquest.app.modal.ModalMessages;
 import com.memoquest.model.db.QuizContent;
 import com.memoquest.service.entity.QuizContentService;
 
-public class Game1Activity extends ActionBarActivity implements View.OnClickListener {
+public class Game2Activity extends ActionBarActivity implements View.OnClickListener {
 
     private QuizContent quizContent;
     private int errorNumber;
     private QuizContentService quizContentService;
-    private EditText editResponseGame0;
-    private TextView validerText;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_game1);
-
-
-        editResponseGame0 = (EditText) this.findViewById(R.id.edit_response_game0);
-
-        validerText = (TextView) this.findViewById(R.id.validerText);
-        validerText.setOnClickListener(this);
+        setContentView(R.layout.activity_game2);
 
         quizContentService = new QuizContentService();
         errorNumber = 0;
@@ -70,24 +61,44 @@ public class Game1Activity extends ActionBarActivity implements View.OnClickList
         if(quizContent.getQuestion() != null){
             textViewQuestion.setText(quizContent.getQuestion());
         }
+        if(quizContent.getAnswerA() != null){
+            TextView textViewAnswerA = (TextView) findViewById(R.id.textViewAnswerA);
+            textViewAnswerA.setText(quizContent.getAnswerA());
+        }
+        if(quizContent.getAnswerB() != null){
+            TextView textViewAnswerB = (TextView) findViewById(R.id.textViewAnswerB);
+            textViewAnswerB.setText(quizContent.getAnswerB());
+        }
+        if(quizContent.getAnswerC() != null){
+            TextView textViewAnswerC = (TextView) findViewById(R.id.textViewAnswerC);
+            textViewAnswerC.setText(quizContent.getAnswerC());
+        }
+        if(quizContent.getAnswerD() != null){
+            TextView textViewAnswerD = (TextView) findViewById(R.id.textViewAnswerD);
+            textViewAnswerD.setText(quizContent.getAnswerD());
+        }
     }
 
-    public void onClick(View v) {
+    @Override
+    public void onClick(View view) {
 
-        switch (v.getId()) {
-            case R.id.validerText:
-                String answer = String.valueOf(editResponseGame0.getText());
-                answer = answer.toLowerCase().trim();
-                checkAnswer(answer);
-            break;
-
-            default:
-                ModalMessages.showWrongMessage(this, "Probleme Technique", this.getClass().getSimpleName() + "Methode: onClick():" + "Switch default.....");
-            break;
+        if(view.getId() == R.id.textViewAnswerA) {
+            checkAnswer(quizContent.getAnswerA());
+        }
+        else if(view.getId() == R.id.textViewAnswerB) {
+            checkAnswer(quizContent.getAnswerB());
+        }
+        else if(view.getId() == R.id.textViewAnswerC) {
+            checkAnswer(quizContent.getAnswerC());
+        }
+        else if(view.getId() == R.id.textViewAnswerD) {
+            checkAnswer(quizContent.getAnswerD());
         }
     }
 
     public void checkAnswer(String answerGamer){
+
+        ModalMessages modalMessages = new ModalMessages();
 
         if(answerGamer.equals(quizContent.getSolution())){
             Toast.makeText(getApplicationContext(), "Bonne réponse", Toast.LENGTH_LONG).show();
@@ -101,6 +112,7 @@ public class Game1Activity extends ActionBarActivity implements View.OnClickList
         else{
             errorNumber++;
             Toast.makeText(getApplicationContext(), "Mauvaise réponse", Toast.LENGTH_LONG).show();
-       }
+            //   Toast.makeText(getApplicationContext(), "errorNumber: " + errorNumber, Toast.LENGTH_LONG).show();
+        }
     }
 }

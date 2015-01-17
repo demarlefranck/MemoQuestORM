@@ -55,7 +55,7 @@ public class SearchForGameQuizActivity extends ListActivity {
         if(quizFilter != -1){
             switch (quizFilter) {
                 case 0:
-                    quizs = quizService.getAll();
+                    quizs = quizService.findAll();
                     break;
 
                 default:

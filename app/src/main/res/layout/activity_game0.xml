@@ -82,92 +82,26 @@
                         android:orientation="horizontal"
                         android:baselineAligned="false"
                         android:layout_weight="50">
-                        <RelativeLayout
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="50"
-                            android:layout_margin="10dp">
-
-                            <TextView
-                                android:layout_width="fill_parent"
-                                android:layout_height="fill_parent"
-                                android:textAppearance="?android:attr/textAppearanceMedium"
-                                android:text="Medium Text"
-                                android:id="@+id/textViewAnswerA"
-                                android:gravity="center"
-                                android:onClick="onClick"
-                                android:clickable="true"/>
-
-                        </RelativeLayout>
-
-                        <RelativeLayout
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="50"
-                            android:layout_margin="10dp">
-
-                            <TextView
-                                android:layout_width="fill_parent"
-                                android:layout_height="fill_parent"
-                                android:textAppearance="?android:attr/textAppearanceMedium"
-                                android:text="Medium Text"
-                                android:id="@+id/textViewAnswerB"
-                                android:gravity="center"
-                                android:onClick="onClick"
-                                android:clickable="true"/>
-                        </RelativeLayout>
-                    </LinearLayout>
-
-                    <LinearLayout
-                        android:orientation="horizontal"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:layout_weight="50">
-
-                        <RelativeLayout
-                            android:layout_width="fill_parent"
-                            android:layout_height="fill_parent"
-                            android:layout_weight="50"
-                            android:layout_margin="10dp">
-
-                            <TextView
-                                android:layout_width="fill_parent"
-                                android:layout_height="fill_parent"
-                                android:textAppearance="?android:attr/textAppearanceMedium"
-                                android:text="Medium Text"
-                                android:id="@+id/textViewAnswerC"
-                                android:gravity="center"
-                                android:onClick="onClick"
-                                android:clickable="true"/>
-                        </RelativeLayout>
-
-                        <RelativeLayout
-                            android:layout_width="fill_parent"
-                            android:layout_height="fill_parent"
-                            android:layout_weight="50"
-                            android:id="@+id/relativeLayout3"
-                            android:layout_margin="10dp">
-
-                            <TextView
-                                android:layout_width="fill_parent"
-                                android:layout_height="fill_parent"
-                                android:textAppearance="?android:attr/textAppearanceMedium"
-                                android:text="Medium Text"
-                                android:id="@+id/textViewAnswerD"
-                                android:gravity="center"
-                                android:onClick="onClick"
-                                android:clickable="true"/>
-                        </RelativeLayout>
-
+                        <EditText
+                            android:layout_width="match_parent"
+                            android:layout_height="40dp"
+                            android:id="@+id/edit_response_game0"
+                            android:background="@drawable/round_corner"
+                            android:layout_marginTop="50dp"
+                            android:layout_alignParentTop="true"
+                            android:layout_centerHorizontal="true"
+                            android:hint="Ecrit la reponse"
+                            android:layout_marginRight="15dp"
+                            android:layout_marginLeft="15dp"
+                            android:textColor="#000000"
+                            android:textAlignment="center"
+                            android:maxLines="1"
+                            android:inputType="text" />
                     </LinearLayout>
 
                 </LinearLayout>
-
-
             </RelativeLayout>
         </LinearLayout>
-
     </LinearLayout>
-
 </RelativeLayout>
 

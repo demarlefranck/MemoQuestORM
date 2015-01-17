@@ -38,4 +38,27 @@ public class QuizChoiceActivity extends ActionBarActivity {
                 break;
         }
     }
+/*
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (requestCode == REQUEST_QUIZ_CONTENT_CODE) {
+
+            if(resultCode == RESULT_OK){
+                int errorNumberTemp = data.getIntExtra("errorNumber", -1);
+
+//MARCHE PAS LA REPONSE MET TROP DE TEMPS A REVENIR
+
+
+                //    Toast.makeText(getApplicationContext(), "errorNumberTemp: " + errorNumberTemp, Toast.LENGTH_LONG).show();
+
+                if(errorNumberTemp != -1){
+                    errorNumber = errorNumber + errorNumberTemp;
+                }
+                else{
+                    Toast.makeText(getApplicationContext(),"probleme de recuperation de errorNumber, onActivityResult() GlobalQuizGameActivity.class " , Toast.LENGTH_LONG).show();
+                }
+            }
+        }
+    }
+        */
 }

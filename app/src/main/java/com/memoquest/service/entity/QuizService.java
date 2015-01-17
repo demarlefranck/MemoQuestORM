@@ -32,9 +32,9 @@ public class QuizService {
         quiz.save();
     }
 
-    public List<Quiz> getAll() {
+    public List<Quiz> findAll() {
 
-        return quizDao.getAll();
+        return quizDao.findAll();
 
     }
 

@@ -10,7 +10,7 @@ import java.util.List;
  */
 public class QuizContentDao {
 
-    public List<QuizContent> getAll(){
+    public List<QuizContent> findAll(){
         return new Select()
                 .from(QuizContent.class)
                 .execute();

@@ -1,6 +1,7 @@
 package com.memoquest.app.game;
 
 import android.content.Intent;
+import android.content.res.Resources;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
 import android.widget.TextView;
@@ -17,10 +18,11 @@ import com.memoquest.service.entity.QuizService;
 import java.util.Date;
 
 public class GlobalQuizGameActivity extends ActionBarActivity {
-
     private static final int REQUEST_SEARCH_CODE = 10;
     private static final int REQUEST_QUIZ_CONTENT_CODE = 11;
-    private static final int REQUEST_GLOBAL_QUIZ_END_CODE = 11;
+    private static final int REQUEST_GLOBAL_QUIZ_END_CODE = 12;
+
+    private Resources resources;
     private GlobalQuiz globalQuiz;
     private Date dateStart;
     private Date dateStop;
@@ -29,20 +31,31 @@ public class GlobalQuizGameActivity extends ActionBarActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
+        resources = getResources();
         errorNumber = 0;
         globalQuiz = null;
         searchQuizId();
     }
 
     private void searchQuizId() {
-        Intent intent = new Intent(this, SearchForGameQuizActivity.class);
-        intent.putExtra("filter", 0);
-        startActivityForResult(intent,REQUEST_SEARCH_CODE);
+
+        QuizService quizService = new QuizService();
+        if(quizService.findAll().isEmpty()){
+            Toast.makeText(getApplicationContext(),String.format(resources.getString(R.string.quiz_empty)) , Toast.LENGTH_LONG).show();
+            Intent returnIntent = new Intent();
+            setResult(RESULT_OK, returnIntent);
+            finish();
+        }
+        else {
+            Intent intent = new Intent(this, SearchForGameQuizActivity.class);
+            intent.putExtra("filter", 0);
+            startActivityForResult(intent, REQUEST_SEARCH_CODE);
+        }
     }
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+
         if (requestCode == REQUEST_SEARCH_CODE) {
 
             if(resultCode == RESULT_OK){
@@ -56,16 +69,13 @@ public class GlobalQuizGameActivity extends ActionBarActivity {
                 }
             }
         }
+
         else if (requestCode == REQUEST_QUIZ_CONTENT_CODE) {
 
             if(resultCode == RESULT_OK){
                 int errorNumberTemp = data.getIntExtra("errorNumber", -1);
-
-//MARCHE PAS LA REPONSE MET TROP DE TEMPS A REVENIR
-
-
-            //    Toast.makeText(getApplicationContext(), "errorNumberTemp: " + errorNumberTemp, Toast.LENGTH_LONG).show();
-
+                    //MARCHE PAS LA REPONSE MET TROP DE TEMPS A REVENIR
+                    Toast.makeText(getApplicationContext(), "errorNumberTemp: " + errorNumberTemp, Toast.LENGTH_LONG).show();
                 if(errorNumberTemp != -1){
                     errorNumber = errorNumber + errorNumberTemp;
                 }
@@ -74,15 +84,14 @@ public class GlobalQuizGameActivity extends ActionBarActivity {
                 }
             }
         }
-        /*
         else if (requestCode == REQUEST_GLOBAL_QUIZ_END_CODE) {
 
             if(resultCode == RESULT_OK){
 
-              //  showResult();
+                 showResult();
             }
         }
-        */
+
     }
 
     private void startGlobalQuizGame(long quizId) {
@@ -111,8 +120,14 @@ public class GlobalQuizGameActivity extends ActionBarActivity {
                 case 1:
                     Intent intent1 = new Intent(this, Game1Activity.class);
                     intent1.putExtra("quizContentId", quizContent.getId());
-                    startActivity(intent1);
+                    startActivityForResult(intent1, REQUEST_QUIZ_CONTENT_CODE);
                 break;
+
+                case 2:
+                    Intent intent2 = new Intent(this, Game2Activity.class);
+                    intent2.putExtra("quizContentId", quizContent.getId());
+                    startActivityForResult(intent2, REQUEST_QUIZ_CONTENT_CODE);
+                    break;
 
                 default:
                     ModalMessages.showWrongMessage(this, "Probleme Technique", "getQuestionType switch default quizContent.getQuestionType():" + quizContent.getQuestionType());
@@ -121,11 +136,9 @@ public class GlobalQuizGameActivity extends ActionBarActivity {
         }
         dateStop = new Date();
 
-/*
+
         Intent intent = new Intent(this, EndGlobalActivityActivity.class);
         startActivityForResult(intent,REQUEST_GLOBAL_QUIZ_END_CODE);
-*/
-        showResult();
     }
 
     private void showResult() {
@@ -133,7 +146,7 @@ public class GlobalQuizGameActivity extends ActionBarActivity {
 
         TextView textViewErrorResult = (TextView) findViewById(R.id.textViewErrorResult);
 
-        //   String textErrorResult = "vous avez fait " + errorNumber + " erreur" + addS(errorNumber);
+      //  String textErrorResult = "vous avez fait " + errorNumber + " erreur" + addS(errorNumber);
         String textErrorResult = "";
 
         textViewErrorResult.setText(textErrorResult);
@@ -153,8 +166,9 @@ public class GlobalQuizGameActivity extends ActionBarActivity {
             chrono += secondes +" seconde" + addS(secondes);
         }
 
-        textViewTimeResult.setText(chrono);
+        //textViewTimeResult.setText(chrono);
 
+        textViewTimeResult.setText("dateStop: " + dateStop.getTime() + "dateStart: " + dateStart.getTime());
     }
 
     private String addS(int nb){

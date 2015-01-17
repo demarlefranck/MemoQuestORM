@@ -38,7 +38,7 @@ public class QuizContentServiceTest extends AndroidTestCase {
         /*
                check db is empty
          */
-        assertEquals(0, quizContentService.getAll().size());
+        assertEquals(0, quizContentService.findAll().size());
 
         Quiz quiz = quizTest.createOneQuiz(1);
 
@@ -46,23 +46,23 @@ public class QuizContentServiceTest extends AndroidTestCase {
 
         quizContentService.edit(quizContent1, (long) 1);
 
-        assertEquals(1, quizContentService.getAll().size());
+        assertEquals(1, quizContentService.findAll().size());
 
         QuizContent quizContent2 = quizContentTest.createOneQuizContent(2, quiz);
         quizContentService.edit(quizContent2, (long) 2);
 
-        assertEquals(2, quizContentService.getAll().size());
+        assertEquals(2, quizContentService.findAll().size());
 
         quizContent2.delete();
 
-        assertEquals(1, quizContentService.getAll().size());
+        assertEquals(1, quizContentService.findAll().size());
 
         QuizContent quizContent3 = quizContentTest.createOneQuizContent(2, quiz);
         quizContentService.edit(quizContent3, (long) 2);
 
         testDeleteAll();
 
-        assertEquals(0, quizContentService.getAll().size());
+        assertEquals(0, quizContentService.findAll().size());
     }
 
     /*
@@ -71,13 +71,13 @@ public class QuizContentServiceTest extends AndroidTestCase {
     public void testDeleteAll() {
         QuizContentService quizContentServiceTemp = new QuizContentService();
 
-        List<QuizContent> quizContents = quizContentServiceTemp.getAll();
+        List<QuizContent> quizContents = quizContentServiceTemp.findAll();
 
         for (QuizContent quizContent : quizContents) {
             quizContent.delete();
         }
 
-        List<QuizContent> quizContentsResult = quizContentServiceTemp.getAll();
+        List<QuizContent> quizContentsResult = quizContentServiceTemp.findAll();
         assertEquals(0, quizContentsResult.size());
     }
 }

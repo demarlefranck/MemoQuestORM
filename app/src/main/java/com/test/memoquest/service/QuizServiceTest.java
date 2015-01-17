@@ -31,28 +31,28 @@ public class QuizServiceTest extends AndroidTestCase {
         /*
                check db is empty
          */
-        assertEquals(0, quizService.getAll().size());
+        assertEquals(0, quizService.findAll().size());
 
         Quiz quiz1 = quizTest.createOneQuiz(1);
         quizService.edit(quiz1, (long) 1);
 
-        assertEquals(1, quizService.getAll().size());
+        assertEquals(1, quizService.findAll().size());
 
         Quiz quiz2 = quizTest.createOneQuiz(2);
         quizService.edit(quiz2, (long) 2);
 
-        assertEquals(2, quizService.getAll().size());
+        assertEquals(2, quizService.findAll().size());
 
         quiz2.delete();
 
-        assertEquals(1, quizService.getAll().size());
+        assertEquals(1, quizService.findAll().size());
 
         Quiz quiz3 = quizTest.createOneQuiz(3);
         quizService.edit(quiz3, (long) 3);
 
         testDeleteAll();
 
-        assertEquals(0, quizService.getAll().size());
+        assertEquals(0, quizService.findAll().size());
     }
 
     /*
@@ -60,13 +60,13 @@ public class QuizServiceTest extends AndroidTestCase {
      */
     public void testDeleteAll() {
         QuizService quizServiceTemp = new QuizService();
-        List<Quiz> quizs = quizServiceTemp.getAll();
+        List<Quiz> quizs = quizServiceTemp.findAll();
 
         for (Quiz quiz : quizs) {
             quiz.delete();
         }
 
-        List<Quiz> quizContentsResult = quizServiceTemp.getAll();
+        List<Quiz> quizContentsResult = quizServiceTemp.findAll();
         assertEquals(0, quizContentsResult.size());
     }
 }

@@ -61,8 +61,8 @@ public class GlobalQuizServiceTest extends AndroidTestCase {
                check db is empty
          */
         assertEquals(0, userService.getAll().size());
-        assertEquals(0, quizService.getAll().size());
-        assertEquals(0, quizContentService.getAll().size());
+        assertEquals(0, quizService.findAll().size());
+        assertEquals(0, quizContentService.findAll().size());
 
         User user = new User();
         user.setActive(1);
@@ -91,8 +91,8 @@ public class GlobalQuizServiceTest extends AndroidTestCase {
                check db is empty
          */
         assertEquals(0, userService.getAll().size());
-        assertEquals(0, quizService.getAll().size());
-        assertEquals(0, quizContentService.getAll().size());
+        assertEquals(0, quizService.findAll().size());
+        assertEquals(0, quizContentService.findAll().size());
 
         User user = new User();
         user.setActive(1);
@@ -126,8 +126,8 @@ public class GlobalQuizServiceTest extends AndroidTestCase {
         /*
                check db is empty
          */
-        assertEquals(0, quizService.getAll().size());
-        assertEquals(0, quizContentService.getAll().size());
+        assertEquals(0, quizService.findAll().size());
+        assertEquals(0, quizContentService.findAll().size());
 
         User user = new User();
         user.setActive(1);
@@ -149,8 +149,8 @@ public class GlobalQuizServiceTest extends AndroidTestCase {
         assertEquals(globalQuizResult1, globalQuizExpected1);
         assertEquals(globalQuizResult1.getQuizContents().size(), globalQuizExpected1.getQuizContents().size());
 
-        assertEquals(1, quizService.getAll().size());
-        assertEquals(1, quizContentService.getAll().size());
+        assertEquals(1, quizService.findAll().size());
+        assertEquals(1, quizContentService.findAll().size());
 
         Quiz quiz2 = quizTest.createOneQuiz(2);
 
@@ -170,8 +170,8 @@ public class GlobalQuizServiceTest extends AndroidTestCase {
         assertEquals(globalQuizResult2, globalQuizExpected2);
         assertEquals(globalQuizResult2.getQuizContents().size(), globalQuizExpected2.getQuizContents().size());
 
-        assertEquals(2, quizService.getAll().size());
-        assertEquals(3, quizContentService.getAll().size());
+        assertEquals(2, quizService.findAll().size());
+        assertEquals(3, quizContentService.findAll().size());
 
         Quiz quiz3 = quizTest.createOneQuiz(3);
 
@@ -192,8 +192,8 @@ public class GlobalQuizServiceTest extends AndroidTestCase {
         GlobalQuiz globalQuizResult3 = globalQuizService.findGlobalQuiz(quiz3);
         assertEquals(globalQuizResult3, globalQuizExpected3);
         assertEquals(globalQuizResult3.getQuizContents().size(), globalQuizExpected3.getQuizContents().size());
-        assertEquals(3, quizService.getAll().size());
-        assertEquals(6, quizContentService.getAll().size());
+        assertEquals(3, quizService.findAll().size());
+        assertEquals(6, quizContentService.findAll().size());
 
         user.delete();
     }
@@ -203,8 +203,8 @@ public class GlobalQuizServiceTest extends AndroidTestCase {
         /*
                check db is empty
          */
-        assertEquals(0, quizService.getAll().size());
-        assertEquals(0, quizContentService.getAll().size());
+        assertEquals(0, quizService.findAll().size());
+        assertEquals(0, quizContentService.findAll().size());
 
         User user = new User();
         user.setActive(1);
@@ -226,8 +226,8 @@ public class GlobalQuizServiceTest extends AndroidTestCase {
         globalQuizExpected.setQuizContents(quizContents);
 
         globalQuizService.editGlobalQuiz(globalQuizExpected);
-        assertEquals(1, quizService.getAll().size());
-        assertEquals(3, quizContentService.getAll().size());
+        assertEquals(1, quizService.findAll().size());
+        assertEquals(3, quizContentService.findAll().size());
 
         GlobalQuiz globalQuizResult = globalQuizService.findGlobalQuiz(quiz);
         assertEquals(globalQuizResult, globalQuizExpected);
@@ -235,8 +235,8 @@ public class GlobalQuizServiceTest extends AndroidTestCase {
 
         globalQuizService.deleteGlobalQuiz(globalQuizResult);
 
-        assertEquals(0, quizService.getAll().size());
-        assertEquals(0, quizContentService.getAll().size());
+        assertEquals(0, quizService.findAll().size());
+        assertEquals(0, quizContentService.findAll().size());
 
         user.delete();
     }

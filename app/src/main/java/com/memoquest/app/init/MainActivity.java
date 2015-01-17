@@ -201,7 +201,7 @@ public class MainActivity extends ActionBarActivity {
 
 
 /*
-        Intent intentConnexion = new Intent(MainActivity.this, Game1Activity.class);
+        Intent intentConnexion = new Intent(MainActivity.this, Game1ActivityOLD.class);
         startActivity(intentConnexion);
   */
 

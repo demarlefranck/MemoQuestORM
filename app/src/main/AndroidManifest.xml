@@ -29,48 +29,52 @@
             </intent-filter>
         </activity>
         <activity
-            android:name="com.memoquest.app.game.Game1Activity"
-            android:label="@string/title_activity_game1" >
+            android:name="com.memoquest.app.game.GlobalQuizGameActivity"
+            android:label="@string/app_name" >
         </activity>
         <activity
-            android:name="com.memoquest.app.game.GlobalQuizGameActivity"
-            android:label="@string/title_activity_game1" >
+            android:name="com.memoquest.app.game.Game1Activity"
+            android:label="@string/app_name" >
         </activity>
         <activity
             android:name="com.memoquest.app.init.MenuActivity"
-            android:label="@string/title_activity_menu" >
+            android:label="@string/app_name" >
         </activity>
         <activity
             android:name="com.memoquest.app.init.ConnectionActivity"
-            android:label="@string/title_activity_connection" >
+            android:label="@string/app_name" >
         </activity>
         <activity
             android:name="com.memoquest.app.init.SwitchUserActivity"
-            android:label="@string/title_activity_switch_user" >
+            android:label="@string/app_name" >
         </activity>
         <activity
             android:name="com.memoquest.app.game.QuizChoiceActivity"
-            android:label="@string/title_activity_game_choice" >
+            android:label="@string/app_name" >
         </activity>
         <activity
             android:name="com.memoquest.app.game.addquiz.AddQuizActivity"
-            android:label="@string/title_activity_add_quiz" >
+            android:label="@string/app_name" >
         </activity>
         <activity
             android:name="com.memoquest.app.game.addquiz.SearchForAddQuizActivity"
-            android:label="@string/title_activity_search_by_name" >
+            android:label="@string/app_name" >
         </activity>
         <activity
             android:name="com.memoquest.app.game.SearchForGameQuizActivity"
-            android:label="@string/title_activity_search_for_game_quiz" >
+            android:label="@string/app_name" >
         </activity>
         <activity
             android:name="com.memoquest.app.game.Game0Activity"
-            android:label="@string/title_activity_game0" >
+            android:label="@string/app_name" >
         </activity>
         <activity
             android:name="com.memoquest.app.game.EndGlobalActivityActivity"
-            android:label="@string/title_activity_end_global" >
+            android:label="@string/app_name" >
+        </activity>
+        <activity
+            android:name="com.memoquest.app.game.Game2Activity"
+            android:label="@string/title_activity_game2" >
         </activity>
     </application>
 

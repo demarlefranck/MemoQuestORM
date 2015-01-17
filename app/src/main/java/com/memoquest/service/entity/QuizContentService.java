@@ -32,8 +32,8 @@ public class QuizContentService {
         quizContent.save();
     }
 
-    public List<QuizContent> getAll() {
-        return quizContentDao.getAll();
+    public List<QuizContent> findAll() {
+        return quizContentDao.findAll();
     }
 
     public List<QuizContent> findByQuiz(Integer quizServerId) {
