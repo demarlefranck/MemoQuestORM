@@ -10,4 +10,8 @@
     <string name="title_activity_game2">Game2Activity</string>
     <string name="title_activity_game3">Game3Activity</string>
 
+
+    <string name="btSpeak">Speak</string>
+
+
 </resources>

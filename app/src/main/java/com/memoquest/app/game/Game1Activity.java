@@ -68,7 +68,7 @@ public class Game1Activity extends ActionBarActivity implements View.OnClickList
 
     @Override
     public void onInit(int i) {
-        textToSpeech.speak(quizContent.getQuestion(), TextToSpeech.QUEUE_FLUSH, null);
+    //    textToSpeech.speak(quizContent.getQuestion(), TextToSpeech.QUEUE_FLUSH, null);
     }
 
     @Override
@@ -126,7 +126,7 @@ public class Game1Activity extends ActionBarActivity implements View.OnClickList
 
     public void checkAnswer(String answerGamer){
 
-        if(answerGamer.equals(quizContent.getSolution())){
+        if(answerGamer.equals(quizContent.getSolution().toLowerCase())){
             Toast.makeText(getApplicationContext(), "Bonne réponse", Toast.LENGTH_LONG).show();
             Intent returnIntent = new Intent();
             returnIntent.putExtra("errorNumber", errorNumber);

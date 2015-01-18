@@ -362,3 +362,33 @@ public class MainActivity extends ActionBarActivity {
         Log.d("DEBUBQuizGetAll", quizService.getAll().toString());
     }
 */
+
+
+/*
+
+18/01/2015
+requete SQL  `QUESTION_TYPE` =0:   semble bon quelque erreurs dans la base
+
+
+requete SQL  `QUESTION_TYPE` =1:   semble bon quelque erreurs dans la base
+
+
+
+
+
+requete SQL  `QUESTION_TYPE` =3:   semble Ok un seul exemple
+
+
+SELECT q.`NAME`
+FROM  `MQ_QUIZ` AS q,  `MQ_QUIZ_CONTENT` AS qc
+WHERE qc.`QUIZ_ID` = q.`ROW_ID`
+AND qc.`QUESTION_TYPE` =0
+GROUP BY q.`NAME`
+LIMIT 0 , 30
+
+
+
+
+
+
+ */

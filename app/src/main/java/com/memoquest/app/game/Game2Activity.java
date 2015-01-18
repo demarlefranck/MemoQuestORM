@@ -2,9 +2,9 @@ package com.memoquest.app.game;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.speech.RecognizerIntent;
 import android.speech.tts.TextToSpeech;
 import android.support.v7.app.ActionBarActivity;
-import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -13,17 +13,23 @@ import com.memoquest.app.modal.ModalMessages;
 import com.memoquest.model.db.QuizContent;
 import com.memoquest.service.entity.QuizContentService;
 
-public class Game2Activity extends ActionBarActivity implements View.OnClickListener ,TextToSpeech.OnInitListener{
+import java.util.List;
+
+public class Game2Activity extends ActionBarActivity implements TextToSpeech.OnInitListener{
 
     private QuizContent quizContent;
     private int errorNumber;
     private QuizContentService quizContentService;
     private TextToSpeech textToSpeech;
+
+    private static final int SPEECH_REQUEST_CODE = 1001;
     private static final int MY_TEXT_TO_SPEECH_CHECK_CODE = 13;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+
         setContentView(R.layout.activity_game2);
 
         quizContentService = new QuizContentService();
@@ -45,23 +51,26 @@ public class Game2Activity extends ActionBarActivity implements View.OnClickList
 
     @Override
     public void onInit(int i) {
-        textToSpeech.speak(quizContent.getQuestion(), TextToSpeech.QUEUE_FLUSH, null);
+        TextView textViewQuestion = (TextView) findViewById(R.id.textViewQuestion);
+        if(quizContent.getQuestion() != null){
+            textViewQuestion.setText(quizContent.getQuestion());
+        }
+        textToSpeech.speak("Lis ce qui est écrit", TextToSpeech.QUEUE_FLUSH, null);
+        displaySpeechRecognizer();
     }
 
     @Override
-    public void onDestroy()
-    {
-        if (textToSpeech != null)
-        {
-            textToSpeech.stop();
-            textToSpeech.shutdown();
-        }
-        super.onDestroy();
-    }
-
     public void onActivityResult(int requestCode, int resultCode, Intent data)
     {
-        if (requestCode == MY_TEXT_TO_SPEECH_CHECK_CODE)
+        if (requestCode == SPEECH_REQUEST_CODE && resultCode == RESULT_OK) {
+            List<String> results = data.getStringArrayListExtra(RecognizerIntent.EXTRA_RESULTS);
+            String spokenText = results.get(0);
+
+
+            Toast.makeText(getApplicationContext(), spokenText, Toast.LENGTH_LONG).show();
+        }
+
+        else if (requestCode == MY_TEXT_TO_SPEECH_CHECK_CODE)
         {
             if (resultCode == TextToSpeech.Engine.CHECK_VOICE_DATA_PASS)
             {
@@ -93,42 +102,23 @@ public class Game2Activity extends ActionBarActivity implements View.OnClickList
     }
 
     @Override
-    protected void onStart() {
-        super.onStart();
-
-        if(quizContent.getAnswerA() != null){
-            TextView textViewAnswerA = (TextView) findViewById(R.id.textViewAnswerA);
-            textViewAnswerA.setText(quizContent.getAnswerA());
+    public void onDestroy()
+    {
+        if (textToSpeech != null)
+        {
+            textToSpeech.stop();
+            textToSpeech.shutdown();
         }
-        if(quizContent.getAnswerB() != null){
-            TextView textViewAnswerB = (TextView) findViewById(R.id.textViewAnswerB);
-            textViewAnswerB.setText(quizContent.getAnswerB());
-        }
-        if(quizContent.getAnswerC() != null){
-            TextView textViewAnswerC = (TextView) findViewById(R.id.textViewAnswerC);
-            textViewAnswerC.setText(quizContent.getAnswerC());
-        }
-        if(quizContent.getAnswerD() != null){
-            TextView textViewAnswerD = (TextView) findViewById(R.id.textViewAnswerD);
-            textViewAnswerD.setText(quizContent.getAnswerD());
-        }
+        super.onDestroy();
     }
 
-    @Override
-    public void onClick(View view) {
+    private void displaySpeechRecognizer() {
+        Intent intent = new Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH);
+        intent.putExtra(RecognizerIntent.EXTRA_LANGUAGE_MODEL,
+                RecognizerIntent.LANGUAGE_MODEL_FREE_FORM);
 
-        if(view.getId() == R.id.textViewAnswerA) {
-            checkAnswer(quizContent.getAnswerA());
-        }
-        else if(view.getId() == R.id.textViewAnswerB) {
-            checkAnswer(quizContent.getAnswerB());
-        }
-        else if(view.getId() == R.id.textViewAnswerC) {
-            checkAnswer(quizContent.getAnswerC());
-        }
-        else if(view.getId() == R.id.textViewAnswerD) {
-            checkAnswer(quizContent.getAnswerD());
-        }
+
+        startActivityForResult(intent, SPEECH_REQUEST_CODE);
     }
 
     public void checkAnswer(String answerGamer){
@@ -147,3 +137,30 @@ public class Game2Activity extends ActionBarActivity implements View.OnClickList
         }
     }
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/*
+
+
+
+
+*/
