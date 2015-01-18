@@ -3,6 +3,7 @@ package com.memoquest.app.game;
 import android.content.Intent;
 import android.content.res.Resources;
 import android.os.Bundle;
+import android.speech.tts.TextToSpeech;
 import android.support.v7.app.ActionBarActivity;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -17,16 +18,18 @@ import com.memoquest.service.entity.QuizService;
 
 import java.util.Date;
 
-public class GlobalQuizGameActivity extends ActionBarActivity {
+public class GlobalQuizGameActivity extends ActionBarActivity implements TextToSpeech.OnInitListener{
     private static final int REQUEST_SEARCH_CODE = 10;
     private static final int REQUEST_QUIZ_CONTENT_CODE = 11;
     private static final int REQUEST_GLOBAL_QUIZ_END_CODE = 12;
+    private static final int MY_TEXT_TO_SPEECH_CHECK_CODE = 13;
 
     private Resources resources;
     private GlobalQuiz globalQuiz;
     private Date dateStart;
     private Date dateStop;
     private int errorNumber;
+    private TextToSpeech textToSpeech;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,19 +37,30 @@ public class GlobalQuizGameActivity extends ActionBarActivity {
         resources = getResources();
         errorNumber = 0;
         globalQuiz = null;
+
+        Intent checkIntent = new Intent();
+        checkIntent.setAction(TextToSpeech.Engine.ACTION_CHECK_TTS_DATA);
+        startActivityForResult(checkIntent, MY_TEXT_TO_SPEECH_CHECK_CODE);
+    }
+
+    @Override
+    public void onInit(int i) {
         searchQuizId();
     }
+
 
     private void searchQuizId() {
 
         QuizService quizService = new QuizService();
         if(quizService.findAll().isEmpty()){
+            textToSpeech.speak("Aucun quouiz disponible, tu dois télécharger des nouveaux quouiz", TextToSpeech.QUEUE_FLUSH, null);
             Toast.makeText(getApplicationContext(),String.format(resources.getString(R.string.quiz_empty)) , Toast.LENGTH_LONG).show();
             Intent returnIntent = new Intent();
             setResult(RESULT_OK, returnIntent);
             finish();
         }
         else {
+            textToSpeech.speak("Selectionne ton quouiz", TextToSpeech.QUEUE_FLUSH, null);
             Intent intent = new Intent(this, SearchForGameQuizActivity.class);
             intent.putExtra("filter", 0);
             startActivityForResult(intent, REQUEST_SEARCH_CODE);
@@ -75,7 +89,7 @@ public class GlobalQuizGameActivity extends ActionBarActivity {
             if(resultCode == RESULT_OK){
                 int errorNumberTemp = data.getIntExtra("errorNumber", -1);
                     //MARCHE PAS LA REPONSE MET TROP DE TEMPS A REVENIR
-                    Toast.makeText(getApplicationContext(), "errorNumberTemp: " + errorNumberTemp, Toast.LENGTH_LONG).show();
+               //     Toast.makeText(getApplicationContext(), "errorNumberTemp: " + errorNumberTemp, Toast.LENGTH_LONG).show();
                 if(errorNumberTemp != -1){
                     errorNumber = errorNumber + errorNumberTemp;
                 }
@@ -91,7 +105,19 @@ public class GlobalQuizGameActivity extends ActionBarActivity {
                  showResult();
             }
         }
-
+        else if (requestCode == MY_TEXT_TO_SPEECH_CHECK_CODE)
+        {
+            if (resultCode == TextToSpeech.Engine.CHECK_VOICE_DATA_PASS)
+            {
+                textToSpeech = new TextToSpeech(this, this);
+            }
+            else
+            {
+                Intent installIntent = new Intent();
+                installIntent.setAction(TextToSpeech.Engine.ACTION_INSTALL_TTS_DATA);
+                startActivity(installIntent);
+            }
+        }
     }
 
     private void startGlobalQuizGame(long quizId) {
@@ -127,6 +153,12 @@ public class GlobalQuizGameActivity extends ActionBarActivity {
                     Intent intent2 = new Intent(this, Game2Activity.class);
                     intent2.putExtra("quizContentId", quizContent.getId());
                     startActivityForResult(intent2, REQUEST_QUIZ_CONTENT_CODE);
+                break;
+
+                case 3:
+                    Intent intent3 = new Intent(this, Game3Activity.class);
+                    intent3.putExtra("quizContentId", quizContent.getId());
+                    startActivityForResult(intent3, REQUEST_QUIZ_CONTENT_CODE);
                     break;
 
                 default:
@@ -136,9 +168,9 @@ public class GlobalQuizGameActivity extends ActionBarActivity {
         }
         dateStop = new Date();
 
-
         Intent intent = new Intent(this, EndGlobalActivityActivity.class);
         startActivityForResult(intent,REQUEST_GLOBAL_QUIZ_END_CODE);
+
     }
 
     private void showResult() {
@@ -159,6 +191,7 @@ public class GlobalQuizGameActivity extends ActionBarActivity {
         int secondes = (int) (diff % 60);
 
         String chrono = "chrono: ";
+
         if(minutes > 0){
             chrono += minutes + " minute" + addS(minutes) + " ";
         }
@@ -166,9 +199,9 @@ public class GlobalQuizGameActivity extends ActionBarActivity {
             chrono += secondes +" seconde" + addS(secondes);
         }
 
-        //textViewTimeResult.setText(chrono);
+       textViewTimeResult.setText(chrono);
 
-        textViewTimeResult.setText("dateStop: " + dateStop.getTime() + "dateStart: " + dateStart.getTime());
+        textToSpeech.speak("Bien joué", TextToSpeech.QUEUE_FLUSH, null);
     }
 
     private String addS(int nb){

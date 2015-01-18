@@ -2,6 +2,7 @@ package com.memoquest.app.game;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.speech.tts.TextToSpeech;
 import android.support.v7.app.ActionBarActivity;
 import android.view.View;
 import android.widget.EditText;
@@ -13,25 +14,24 @@ import com.memoquest.app.modal.ModalMessages;
 import com.memoquest.model.db.QuizContent;
 import com.memoquest.service.entity.QuizContentService;
 
-public class Game1Activity extends ActionBarActivity implements View.OnClickListener {
+public class Game1Activity extends ActionBarActivity implements View.OnClickListener ,TextToSpeech.OnInitListener{
 
     private QuizContent quizContent;
     private int errorNumber;
     private QuizContentService quizContentService;
-    private EditText editResponseGame0;
+    private EditText editResponseGame;
     private TextView validerText;
+    private TextToSpeech textToSpeech;
+    private static final int MY_TEXT_TO_SPEECH_CHECK_CODE = 13;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_game1);
 
-
-        editResponseGame0 = (EditText) this.findViewById(R.id.edit_response_game0);
-
+        editResponseGame = (EditText) this.findViewById(R.id.edit_response_game);
         validerText = (TextView) this.findViewById(R.id.validerText);
         validerText.setOnClickListener(this);
-
         quizContentService = new QuizContentService();
         errorNumber = 0;
 
@@ -43,6 +43,10 @@ public class Game1Activity extends ActionBarActivity implements View.OnClickList
         } else {
             ModalMessages.showWrongMessage(this, "Probleme Technique", this.getClass().getSimpleName() + "onCreate(): " + "Probleme d'identification de ObjetbunbleValue  :  getObjetbunbleValue() = -1");
         }
+
+        Intent checkIntent = new Intent();
+        checkIntent.setAction(TextToSpeech.Engine.ACTION_CHECK_TTS_DATA);
+        startActivityForResult(checkIntent, MY_TEXT_TO_SPEECH_CHECK_CODE);
     }
 
     private long getObjetbunbleValue() {
@@ -63,6 +67,39 @@ public class Game1Activity extends ActionBarActivity implements View.OnClickList
 
 
     @Override
+    public void onInit(int i) {
+        textToSpeech.speak(quizContent.getQuestion(), TextToSpeech.QUEUE_FLUSH, null);
+    }
+
+    @Override
+    public void onDestroy()
+    {
+        if (textToSpeech != null)
+        {
+            textToSpeech.stop();
+            textToSpeech.shutdown();
+        }
+        super.onDestroy();
+    }
+
+    public void onActivityResult(int requestCode, int resultCode, Intent data)
+    {
+        if (requestCode == MY_TEXT_TO_SPEECH_CHECK_CODE)
+        {
+            if (resultCode == TextToSpeech.Engine.CHECK_VOICE_DATA_PASS)
+            {
+                textToSpeech = new TextToSpeech(this, this);
+            }
+            else
+            {
+                Intent installIntent = new Intent();
+                installIntent.setAction(TextToSpeech.Engine.ACTION_INSTALL_TTS_DATA);
+                startActivity(installIntent);
+            }
+        }
+    }
+
+    @Override
     protected void onStart() {
         super.onStart();
 
@@ -76,7 +113,7 @@ public class Game1Activity extends ActionBarActivity implements View.OnClickList
 
         switch (v.getId()) {
             case R.id.validerText:
-                String answer = String.valueOf(editResponseGame0.getText());
+                String answer = String.valueOf(editResponseGame.getText());
                 answer = answer.toLowerCase().trim();
                 checkAnswer(answer);
             break;
@@ -91,16 +128,15 @@ public class Game1Activity extends ActionBarActivity implements View.OnClickList
 
         if(answerGamer.equals(quizContent.getSolution())){
             Toast.makeText(getApplicationContext(), "Bonne réponse", Toast.LENGTH_LONG).show();
-
             Intent returnIntent = new Intent();
             returnIntent.putExtra("errorNumber", errorNumber);
             setResult(RESULT_OK, returnIntent);
             finish();
-
         }
         else{
             errorNumber++;
             Toast.makeText(getApplicationContext(), "Mauvaise réponse", Toast.LENGTH_LONG).show();
-       }
+            textToSpeech.speak("Mauvaise réponse", TextToSpeech.QUEUE_FLUSH, null);
+        }
     }
 }

@@ -67,6 +67,12 @@ public class MainActivity extends ActionBarActivity {
           fin de section pour les tests
 
  */
+
+
+
+
+
+
         if(userService.getAll().size() == 0){
             insertSampleDataUser();
         }

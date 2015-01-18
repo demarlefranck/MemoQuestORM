@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.speech.tts.TextToSpeech;
 import android.support.v7.app.ActionBarActivity;
 import android.view.View;
+import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -13,21 +14,28 @@ import com.memoquest.app.modal.ModalMessages;
 import com.memoquest.model.db.QuizContent;
 import com.memoquest.service.entity.QuizContentService;
 
-public class Game2Activity extends ActionBarActivity implements View.OnClickListener ,TextToSpeech.OnInitListener{
+public class Game3Activity extends ActionBarActivity implements View.OnClickListener ,TextToSpeech.OnInitListener{
 
     private QuizContent quizContent;
     private int errorNumber;
+    private EditText editResponseGame3;
+    private TextView validerText;
     private QuizContentService quizContentService;
     private TextToSpeech textToSpeech;
     private static final int MY_TEXT_TO_SPEECH_CHECK_CODE = 13;
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_game2);
+        setContentView(R.layout.activity_game3);
 
         quizContentService = new QuizContentService();
         errorNumber = 0;
+        editResponseGame3 = (EditText) this.findViewById(R.id.edit_response_game3);
+
+        validerText = (TextView) this.findViewById(R.id.validerText);
+        validerText.setOnClickListener(this);
 
         long quizContentId = getObjetbunbleValue();
 
@@ -45,7 +53,7 @@ public class Game2Activity extends ActionBarActivity implements View.OnClickList
 
     @Override
     public void onInit(int i) {
-        textToSpeech.speak(quizContent.getQuestion(), TextToSpeech.QUEUE_FLUSH, null);
+        textToSpeech.speak("Tu dois ecrire la phrase en mettant les mots dans l'ordre", TextToSpeech.QUEUE_FLUSH, null);
     }
 
     @Override
@@ -92,48 +100,36 @@ public class Game2Activity extends ActionBarActivity implements View.OnClickList
         return objetbunbleValue;
     }
 
+
     @Override
     protected void onStart() {
         super.onStart();
 
-        if(quizContent.getAnswerA() != null){
-            TextView textViewAnswerA = (TextView) findViewById(R.id.textViewAnswerA);
-            textViewAnswerA.setText(quizContent.getAnswerA());
-        }
-        if(quizContent.getAnswerB() != null){
-            TextView textViewAnswerB = (TextView) findViewById(R.id.textViewAnswerB);
-            textViewAnswerB.setText(quizContent.getAnswerB());
-        }
-        if(quizContent.getAnswerC() != null){
-            TextView textViewAnswerC = (TextView) findViewById(R.id.textViewAnswerC);
-            textViewAnswerC.setText(quizContent.getAnswerC());
-        }
-        if(quizContent.getAnswerD() != null){
-            TextView textViewAnswerD = (TextView) findViewById(R.id.textViewAnswerD);
-            textViewAnswerD.setText(quizContent.getAnswerD());
+        TextView textViewQuestion = (TextView) findViewById(R.id.textViewQuestion);
+        if(quizContent.getQuestion() != null){
+            textViewQuestion.setText(quizContent.getQuestion());
         }
     }
 
     @Override
-    public void onClick(View view) {
+    public void onClick(View v) {
 
-        if(view.getId() == R.id.textViewAnswerA) {
-            checkAnswer(quizContent.getAnswerA());
-        }
-        else if(view.getId() == R.id.textViewAnswerB) {
-            checkAnswer(quizContent.getAnswerB());
-        }
-        else if(view.getId() == R.id.textViewAnswerC) {
-            checkAnswer(quizContent.getAnswerC());
-        }
-        else if(view.getId() == R.id.textViewAnswerD) {
-            checkAnswer(quizContent.getAnswerD());
+        switch (v.getId()) {
+            case R.id.validerText:
+                String answer = String.valueOf(editResponseGame3.getText());
+                answer = answer.toLowerCase().trim();
+                checkAnswer(answer);
+                break;
+
+            default:
+                ModalMessages.showWrongMessage(this, "Probleme Technique", this.getClass().getSimpleName() + "Methode: onClick():" + "Switch default.....");
+                break;
         }
     }
 
     public void checkAnswer(String answerGamer){
 
-        if(answerGamer.equals(quizContent.getSolution())){
+        if(answerGamer.equals(quizContent.getSolution().toLowerCase())){
             Toast.makeText(getApplicationContext(), "Bonne réponse", Toast.LENGTH_LONG).show();
             Intent returnIntent = new Intent();
             returnIntent.putExtra("errorNumber", errorNumber);
@@ -142,7 +138,6 @@ public class Game2Activity extends ActionBarActivity implements View.OnClickList
         }
         else{
             errorNumber++;
-            Toast.makeText(getApplicationContext(), "Mauvaise réponse", Toast.LENGTH_LONG).show();
             textToSpeech.speak("Mauvaise réponse", TextToSpeech.QUEUE_FLUSH, null);
         }
     }
