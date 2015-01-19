@@ -16,7 +16,7 @@ import com.memoquest.model.db.QuizContent;
 import com.memoquest.service.GlobalQuizService;
 import com.memoquest.service.entity.QuizService;
 
-import java.util.Date;
+import java.util.Calendar;
 
 public class GlobalQuizGameActivity extends ActionBarActivity implements TextToSpeech.OnInitListener{
     private static final int REQUEST_SEARCH_CODE = 10;
@@ -26,8 +26,8 @@ public class GlobalQuizGameActivity extends ActionBarActivity implements TextToS
 
     private Resources resources;
     private GlobalQuiz globalQuiz;
-    private Date dateStart;
-    private Date dateStop;
+    private Calendar dateStart;
+    private Calendar dateStop;
     private int errorNumber;
     private TextToSpeech textToSpeech;
 
@@ -102,7 +102,10 @@ public class GlobalQuizGameActivity extends ActionBarActivity implements TextToS
 
             if(resultCode == RESULT_OK){
 
-                 showResult();
+
+                dateStop = Calendar.getInstance();
+
+                showResult();
             }
         }
         else if (requestCode == MY_TEXT_TO_SPEECH_CHECK_CODE)
@@ -133,7 +136,8 @@ public class GlobalQuizGameActivity extends ActionBarActivity implements TextToS
 
     private void lunchAllQuizContentGame() {
 
-        dateStart = new Date();
+        dateStart = Calendar.getInstance();
+
         for(QuizContent quizContent : globalQuiz.getQuizContents()) {
 
             switch (quizContent.getQuestionType()) {
@@ -166,7 +170,6 @@ public class GlobalQuizGameActivity extends ActionBarActivity implements TextToS
                 break;
             }
         }
-        dateStop = new Date();
 
         Intent intent = new Intent(this, EndGlobalActivityActivity.class);
         startActivityForResult(intent,REQUEST_GLOBAL_QUIZ_END_CODE);
@@ -184,11 +187,10 @@ public class GlobalQuizGameActivity extends ActionBarActivity implements TextToS
         textViewErrorResult.setText(textErrorResult);
 
         TextView textViewTimeResult = (TextView) findViewById(R.id.textViewTimeResult);
-
-        long diff = (dateStop.getTime() - dateStart.getTime()) ;
-
-        int minutes = (int) (diff / 60);
-        int secondes = (int) (diff % 60);
+        Long diff = dateStop.getTimeInMillis() - dateStart.getTimeInMillis();
+        int i = diff.intValue();
+        int secondes = (i / 1000);
+        int minutes = (secondes / 60);
 
         String chrono = "chrono: ";
 
@@ -199,8 +201,7 @@ public class GlobalQuizGameActivity extends ActionBarActivity implements TextToS
             chrono += secondes +" seconde" + addS(secondes);
         }
 
-       textViewTimeResult.setText(chrono);
-
+        textViewTimeResult.setText(chrono);
         textToSpeech.speak("Bien joué", TextToSpeech.QUEUE_FLUSH, null);
     }
 

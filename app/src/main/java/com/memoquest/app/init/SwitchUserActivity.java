@@ -52,6 +52,7 @@ public class SwitchUserActivity extends Activity implements View.OnClickListener
         }
     }
 
+
     private void initActivity(){
         users = userService.getAll();
 
@@ -132,7 +133,5 @@ public class SwitchUserActivity extends Activity implements View.OnClickListener
         public boolean hasStableIds() {
             return true;
         }
-
     }
-
 }

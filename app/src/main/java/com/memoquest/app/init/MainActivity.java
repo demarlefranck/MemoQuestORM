@@ -89,11 +89,10 @@ public class MainActivity extends ActionBarActivity {
 
             startWithConnection();
 
-        } else{
+        } else {
 
             startWithoutConnection();
         }
-
     }
 
 
@@ -226,8 +225,6 @@ public class MainActivity extends ActionBarActivity {
 
 
     public void startWithConnection(){
-
-      //  modalMessages.showGoodMessage(this, "Good", "le téléphone est connecté");
 
         User userCurrent = userService.getUserActive();
 
