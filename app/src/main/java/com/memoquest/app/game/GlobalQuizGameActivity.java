@@ -188,9 +188,10 @@ public class GlobalQuizGameActivity extends ActionBarActivity implements TextToS
 
         TextView textViewTimeResult = (TextView) findViewById(R.id.textViewTimeResult);
         Long diff = dateStop.getTimeInMillis() - dateStart.getTimeInMillis();
-        int i = diff.intValue();
-        int secondes = (i / 1000);
-        int minutes = (secondes / 60);
+        int ms = diff.intValue();
+        int s = (ms / 1000);
+        int minutes = (s / 60);
+        int secondes = (s % 60);
 
         String chrono = "chrono: ";
 
