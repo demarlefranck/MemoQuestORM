@@ -110,6 +110,7 @@
                                 android:onClick="onClick"
                                 android:background="@drawable/search_by_skill" />
                         </RelativeLayout>
+
                     </LinearLayout>
 
                     <LinearLayout

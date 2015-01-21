@@ -61,7 +61,7 @@ public class MenuActivity extends Activity implements View.OnClickListener {
 
             case R.id.imageViewLogout:
                 userService.editAllUserToNoActif();
-                Intent intentSwitchUser = new Intent(MenuActivity.this, SwitchUserActivity.class);
+                Intent intentSwitchUser = new Intent(MenuActivity.this, MainActivity.class);
                 startActivity(intentSwitchUser);
             break;
 

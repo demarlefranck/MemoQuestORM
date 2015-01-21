@@ -1,6 +1,78 @@
 package com.memoquest.app.game;
 
 /*
+
+
+
+    private void insertSampleDataQuiz() {
+
+        QuizService quizService = new QuizService();
+        QuizContentService quizContentService = new QuizContentService();
+        QuizTest quizTest = new QuizTest();
+        QuizContentTest quizContentTest = new QuizContentTest();
+
+        for(int i = 0; i != 10; i++){
+
+            Quiz quiz = quizTest.createOneQuiz(i);
+
+            quizService.edit(quiz, (long) -10);
+
+            for(int j = 0; j != 5; j++){
+
+                QuizContent quizContent = quizContentTest.createOneQuizContent(j, quiz);
+                quizContentService.edit(quizContent, (long) -10);
+            }
+        }
+    }
+
+    private void test() {
+
+
+
+User userCurrent = userService.getUserActive();
+
+
+
+        if(userCurrent == null){
+        ModalMessages.showWrongMessage(this, "TEST", "Pas de user acif");
+        }
+        else{
+        ModalMessages.showGoodMessage(this, "TEST", "User actif trouve");
+        }
+        }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 public class Game1ActivityOLD extends ActionBarActivity implements View.OnClickListener {
 
     private QuizContent quizContent;

@@ -1,40 +1,61 @@
 package com.memoquest.app.init;
 
+import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v7.app.ActionBarActivity;
 import android.util.Log;
-import android.view.Menu;
-import android.view.MenuItem;
+import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
+import android.widget.ListView;
+import android.widget.TextView;
 
 import com.memoquest.app.R;
 import com.memoquest.app.modal.ModalMessages;
-import com.memoquest.model.db.Quiz;
-import com.memoquest.model.db.QuizContent;
 import com.memoquest.model.db.User;
 import com.memoquest.service.ConnexionService;
-import com.memoquest.service.entity.QuizContentService;
-import com.memoquest.service.entity.QuizService;
 import com.memoquest.service.entity.UserService;
-import com.memoquest.service.rest.QuizContentRestService;
 import com.memoquest.service.synchro.ManagerSynchroService;
-import com.test.memoquest.model.QuizContentTest;
-import com.test.memoquest.model.QuizTest;
 
-public class MainActivity extends ActionBarActivity {
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+public class MainActivity  extends Activity implements View.OnClickListener {
 
     private ConnexionService connexionService;
     private UserService userService;
     private ManagerSynchroService managerSynchroService;
+    private TextView newUseText;
+    private List<User> users;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
+
+      /*  super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+*/
+
+
 
         connexionService = new ConnexionService();
         userService = new UserService();
         managerSynchroService = new ManagerSynchroService();
+
+
+
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
+
+        userService = new UserService();
+
+        newUseText = (TextView) this.findViewById(R.id.newUseText);
+        newUseText.setOnClickListener(this);
+
+        initActivity();
 
        //   testQuizContent();
     }
@@ -95,63 +116,6 @@ public class MainActivity extends ActionBarActivity {
         }
     }
 
-
-
-
-
-    private void testRestServer() {
-
-        QuizContentRestService quizContentRestService = new QuizContentRestService();
-
-        Quiz quiz = new Quiz();
-        quiz.setServerId(1);
-
-         quizContentRestService.getQuizContentsByQuiz(quiz).size();
-    }
-
-
-
-
-
-
-
-
-
-/*
-    private void testRestFake() {
-        SkillRestService skillRestService = new SkillRestService();
-        QuizRestService quizRestService = new QuizRestService();
-        QuizContentRestService quizContentRestService = new QuizContentRestService();
-
-        for (Skill skill : skillRestService.getServerSkills()){
-            Log.d("getServerSkills:  ", skill.toString());
-        }
-        for (Quiz quiz : quizRestService.getAllQuizsServer()){
-            Log.d("getQuizs:  ", quiz.toString());
-        }
-        for (QuizContent quizContent : quizContentRestService.getQuizContents()){
-            Log.d("getQuizContents:  ", quizContent.toString());
-        }
-
-
-    }
-*/
-
-
-    private void testInsert() {
-
-
-/*
-        JsonReader jsonReader = new JsonReader();
-        BddManager bddManager = new BddManager();
-        bddManager.initBddTemp();
-
-        Log.d("DEBUBQuizGetAll", new Select().from(ServerQuizContent.class).execute().toString());
-        Log.d("DEBUBQuizGetAll", new Select().from(ServerQuiz.class).execute().toString());
-        Log.d("DEBUBQuizGetAll", new Select().from(ServerSkill.class).execute().toString());
-*/
-    }
-
     private void insertSampleDataUser() {
 
         User user1 = connexionService.isAuthentifiate("demarl_f", "eip");
@@ -174,64 +138,18 @@ public class MainActivity extends ActionBarActivity {
 
 
     }
-    private void insertSampleDataQuiz() {
-
-        QuizService quizService = new QuizService();
-        QuizContentService quizContentService = new QuizContentService();
-        QuizTest quizTest = new QuizTest();
-        QuizContentTest quizContentTest = new QuizContentTest();
-
-        for(int i = 0; i != 10; i++){
-
-            Quiz quiz = quizTest.createOneQuiz(i);
-
-            quizService.edit(quiz, (long) -10);
-
-
-            for(int j = 0; j != 5; j++){
-
-                QuizContent quizContent = quizContentTest.createOneQuizContent(j, quiz);
-
-
-
-                quizContentService.edit(quizContent, (long) -10);
-
-
-
-            }
-        }
-    }
-
-    private void test() {
-
-
-/*
-        Intent intentConnexion = new Intent(MainActivity.this, Game1ActivityOLD.class);
-        startActivity(intentConnexion);
-  */
-
-
-        User userCurrent = userService.getUserActive();
-
-
-
-        if(userCurrent == null){
-            ModalMessages.showWrongMessage(this, "TEST", "Pas de user acif");
-        }
-        else{
-            ModalMessages.showGoodMessage(this, "TEST", "User actif trouve");
-        }
-    }
-
 
     public void startWithConnection(){
 
         User userCurrent = userService.getUserActive();
 
         if(userCurrent == null){
-
+/*
             Intent intentConnexion = new Intent(MainActivity.this, SwitchUserActivity.class);
             startActivity(intentConnexion);
+*/
+        //    setContentView(R.layout.activity_switch_user);
+          //  initActivity();
         }
         else{
 
@@ -256,11 +174,103 @@ public class MainActivity extends ActionBarActivity {
         }
     }
 
+    private void initActivity(){
+        users = userService.getAll();
+
+        if(users.isEmpty()){
+
+            Intent intentMenu = new Intent(MainActivity.this, ConnectionActivity.class);
+            startActivity(intentMenu);
+
+        }
+        else if(users.size() == 1 && users.get(0).getActive() == 1){
+
+            Intent intentMenu = new Intent(MainActivity.this, MenuActivity.class);
+            startActivity(intentMenu);
+
+        }else {
+
+            showUserListview();
+        }
+    }
+
+    private void showUserListview(){
+        final ListView listView = (ListView) findViewById(R.id.userListview);
+        String[] values = getUserLoginListValues();
+
+        final List<String> list = new ArrayList<String>();
+
+        for (int i = 0; i < values.length; ++i) {
+            list.add(values[i]);
+        }
+
+        final StableArrayAdapter adapter = new StableArrayAdapter(this, android.R.layout.simple_list_item_1, list);
+
+        listView.setAdapter(adapter);
+
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+
+                User user = users.get(position);
+                userService.editUserToActive(user);
+
+                Intent intentMenu = new Intent(MainActivity.this, MenuActivity.class);
+                startActivity(intentMenu);
+            }
+        });
+    }
 
 
+    private String[] getUserLoginListValues(){
+        List<String> loginList = new ArrayList<String>();
+
+        for(User user : users){
+            loginList.add(user.getLogin())      ;
+        }
+
+        return loginList.toArray(new String[0]);
+    }
+
+    private class StableArrayAdapter extends ArrayAdapter<String> {
+
+        Map<String, Integer> mIdMap = new HashMap<String, Integer>();
+
+        public StableArrayAdapter(Context context, int textViewResourceId,
+                                  List<String> objects) {
+            super(context, textViewResourceId, objects);
+            for (int i = 0; i < objects.size(); ++i) {
+                mIdMap.put(objects.get(i), i);
+            }
+        }
+
+        @Override
+        public long getItemId(int position) {
+            String item = getItem(position);
+            return mIdMap.get(item);
+        }
+
+        @Override
+        public boolean hasStableIds() {
+            return true;
+        }
+    }
+
+    public void onClick(View v) {
+
+        switch (v.getId()) {
+            case R.id.newUseText:
+                Intent intent = new Intent(MainActivity.this, ConnectionActivity.class);
+                startActivity(intent);
+                break;
+            default:
+                ModalMessages.showWrongMessage(this, "Probleme Technique", this.getClass().getSimpleName() + "Methode: onClick():" + "Switch default.....");
+                break;
+        }
+    }
     
     
-    
+    /*
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
 
@@ -280,6 +290,7 @@ public class MainActivity extends ActionBarActivity {
         }
         return super.onOptionsItemSelected(item);
     }
+    */
 }
 
 
