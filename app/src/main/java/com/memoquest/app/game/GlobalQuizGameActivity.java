@@ -53,7 +53,7 @@ public class GlobalQuizGameActivity extends ActionBarActivity implements TextToS
 
         QuizService quizService = new QuizService();
         if(quizService.findAll().isEmpty()){
-            textToSpeech.speak("Aucun quouiz disponible, tu dois télécharger des nouveaux quouiz", TextToSpeech.QUEUE_FLUSH, null);
+            textToSpeech.speak("Aucun quouiz disponible, tu dois télécharger au moins un nouveau quouiz", TextToSpeech.QUEUE_FLUSH, null);
             Toast.makeText(getApplicationContext(),String.format(resources.getString(R.string.quiz_empty)) , Toast.LENGTH_LONG).show();
             Intent returnIntent = new Intent();
             setResult(RESULT_OK, returnIntent);

@@ -4,7 +4,6 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -33,79 +32,28 @@ public class MainActivity  extends Activity implements View.OnClickListener {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-
-      /*  super.onCreate(savedInstanceState);
+        super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
-*/
-
-
 
         connexionService = new ConnexionService();
         userService = new UserService();
         managerSynchroService = new ManagerSynchroService();
 
-
-
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
-
         userService = new UserService();
-
         newUseText = (TextView) this.findViewById(R.id.newUseText);
         newUseText.setOnClickListener(this);
 
         initActivity();
-
-       //   testQuizContent();
     }
 
     @Override
     protected void onStart() {
-
-        Log.i("", "MainActivity.class: onStart()");
         super.onStart();
-
-
-
-        /*
-            section pour les tests
-
-       // ServerQuizContent.txt();
-
-       // testInsert();
-
-//        testRestServer();
-
-
-
-
-        QuizService quizService = new QuizService();
-        if(quizService.getAll().size() == 0){
-            insertSampleData();
-        }
-
-          fin de section pour les tests
-
- */
-
-
-
-
-
 
         if(userService.getAll().size() == 0){
             insertSampleDataUser();
         }
 
-
-
-
-
-        /*
-            Version OK
-
-        */
         if(connexionService.isConnected(this)){
 
             startWithConnection();
@@ -135,8 +83,6 @@ public class MainActivity  extends Activity implements View.OnClickListener {
 
         User user6 = connexionService.isAuthentifiate("devill_b", "eip");
         userService.edit(user6, (long) -1);
-
-
     }
 
     public void startWithConnection(){
@@ -144,12 +90,8 @@ public class MainActivity  extends Activity implements View.OnClickListener {
         User userCurrent = userService.getUserActive();
 
         if(userCurrent == null){
-/*
-            Intent intentConnexion = new Intent(MainActivity.this, SwitchUserActivity.class);
-            startActivity(intentConnexion);
-*/
-        //    setContentView(R.layout.activity_switch_user);
-          //  initActivity();
+
+
         }
         else{
 
@@ -183,12 +125,7 @@ public class MainActivity  extends Activity implements View.OnClickListener {
             startActivity(intentMenu);
 
         }
-        else if(users.size() == 1 && users.get(0).getActive() == 1){
-
-            Intent intentMenu = new Intent(MainActivity.this, MenuActivity.class);
-            startActivity(intentMenu);
-
-        }else {
+        else {
 
             showUserListview();
         }
@@ -205,9 +142,7 @@ public class MainActivity  extends Activity implements View.OnClickListener {
         }
 
         final StableArrayAdapter adapter = new StableArrayAdapter(this, android.R.layout.simple_list_item_1, list);
-
         listView.setAdapter(adapter);
-
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {

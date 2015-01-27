@@ -1,25 +1,8 @@
 package com.memoquest.dao.rest;
 
-import android.util.Log;
-
-import com.memoquest.model.db.Quiz;
-import com.memoquest.model.db.QuizContent;
-import com.memoquest.service.Utils.MyDateUtils;
-import com.temp.json.JsonContener;
-
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
-
-import java.text.ParseException;
-import java.util.ArrayList;
-import java.util.List;
-
-import static java.lang.Integer.parseInt;
-
 /**
  * Created by franck on 19/12/14.
- */
+
 public class QuizContentRestDao {
 
     //bidouille pour remplacer le service rest avec param
@@ -88,3 +71,4 @@ public class QuizContentRestDao {
         return quizContents;
     }
 }
+ */
